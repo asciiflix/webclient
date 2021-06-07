@@ -1,7 +1,7 @@
 FROM node:16-alpine as build
 WORKDIR /webclient
-ENV PATH /webclient/node_modules/.bin:$PATH
-COPY package.json ./
+COPY package*.json ./
+RUN npm install
 RUN npm install react-scripts@4.0.3 -g
 COPY . ./
 RUN npm run build

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Cloning Server Repo from GitHub.com..."
-git clone git@github.com:asciiflix/webclient.git
+git clone git@github.com-webclient:asciiflix/webclient.git
 echo "Repo Cloned"
 
 echo "Starting Docker-Compose"
