@@ -15,6 +15,6 @@ docker-compose up -d --build
 
 echo "Started Containers..."
 echo "Cleaning Up Source Files"
-rm -rf ~/server
+rm -rf ~/webclient
 
 exit 0
