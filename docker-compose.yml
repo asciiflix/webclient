@@ -1,0 +1,20 @@
+version: "3"
+services:
+   webclient:
+    build:
+      context: .
+    image: asciiflix_webclient
+    container_name: asciiflix_webclient
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.asciiflix_webclient.rule=Host(`asciiflix.tech`) || Host(`www.asciiflix.tech`)"
+      - "traefik.http.routers.asciiflix_webclient.entrypoints=websecure"
+      - "traefik.http.routers.asciiflix_webclient.tls.certresolver=myhttpchallenge"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
