@@ -1,0 +1,29 @@
+.title-bar-main-box {
+    background-color: rgb(219, 219, 219);
+}
+
+.title-bar-content-box {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.title-bar-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px;
+    margin: 0px;
+    display: inline;
+    margin-right: 400px;
+}
+
+.title-bar-page {
+    display: inline;
+}
+
+.title-bar-links {
+    display: inline;
+}
+
+.title-bar-page{
+    margin-left: 10px;
+}
