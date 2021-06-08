@@ -3,6 +3,11 @@
 ## Development
 
 Make sure node, npm, and yarn are installed.
+Also note that all dependencies (``node_modules``) should be installed, if not, run:
+```bash
+npm install
+```
+
 Then to run the development server call:
 
 ```bash
