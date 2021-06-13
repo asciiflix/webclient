@@ -4,6 +4,7 @@ import TitleBar from './Common/TitleBar/TitleBar';
 import HomePage from './Pages/HomePage';
 import LoginPage from './Pages/LoginPage';
 import "./App.css"
+import VideoPage from './Pages/VideoPage/VideoPage';
 
 export default class App extends React.Component {
   render() {
@@ -13,6 +14,7 @@ export default class App extends React.Component {
             <TitleBar/>
             <div className="main-content">
               <Switch>
+                <Route path="/watch/:videoId" component={VideoPage}/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/" component={HomePage}/>
               </Switch>
