@@ -1,0 +1,12 @@
+.video-player-frame{
+    background-color: black;
+    color: white;
+    letter-spacing: 20px;
+    font-size: 36px;
+    line-height-step: 0px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.video-player-row{
+    margin: 0px;
+    text-align: center;
+}

@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
-import { AsciiVideoPlayer } from './AsciiVideoPlayer/AsciiVideoPlayer'
+import React from 'react'
+import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
+import TitleBar from './Common/TitleBar/TitleBar';
+import HomePage from './Pages/HomePage';
+import LoginPage from './Pages/LoginPage';
+import "./App.css"
+import VideoPage from './Pages/VideoPage/VideoPage';
 
-function App() {
-  const [frames] = useState([["XX0000", "XX0000"], ["00XX00", "00XX00"], ["0000XX", "0000XX"]]);
-  return (
-    <>
-      <AsciiVideoPlayer frames={frames}/>
-    </>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <div>
+          <Router>
+            <TitleBar/>
+            <div className="main-content">
+              <Switch>
+                <Route path="/watch/:videoId" component={VideoPage}/>
+                <Route path="/login" component={LoginPage}/>
+                <Route path="/" component={HomePage}/>
+              </Switch>
+            </div>
+          </Router>
+      </div>
+    )
+  }
 }
-
-export default App;
-

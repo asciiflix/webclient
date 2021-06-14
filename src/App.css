@@ -1,0 +1,10 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
