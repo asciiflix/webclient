@@ -14,6 +14,13 @@ Then to run the development server call:
 npm start
 ```
 
+With ``npm start`` the frontend will use your local-backend ``http://localhost:8080``. If you want to use the Production API, you have to run ``npm run build`` and all files will be generated. Now you have to run a Webserver to use the frontend.
+You can do this steps:
+````bash
+npm install -g serve
+serve -s build
+````
+
 ### Development Container
 
 To start and run the application with your newest changes and debugging capabilities, you can simply open this project in VSCode with the .devcontainer configs. <br>

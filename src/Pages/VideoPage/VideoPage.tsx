@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { match } from 'react-router';
 import VideoPlayer from '../../Components/VideoPlayer/VideoPlayer';
 import VideoData from '../../Models/VideoModel';
+import {backendURL} from '../../Config';
 
 interface VideoPageProps {
     match: match<any>
@@ -30,7 +31,7 @@ export default class VideoPage extends Component<VideoPageProps, VideoPageState>
 
 
     componentDidMount() {
-        fetch('http://localhost:8080//video/getContent?id=' + this.videoId)
+        fetch(backendURL + '/video/getContent?id=' + this.videoId)
             .then((response: Response) => response.json())
             .then((json) => {
                 // TODO add error handling
