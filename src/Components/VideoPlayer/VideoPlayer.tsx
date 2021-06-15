@@ -1,58 +1,116 @@
 import React, { Component } from 'react'
+import { backendURL } from '../../Config';
 import VideoData from '../../Models/VideoModel'
 import "./VideoPlayer.css"
 
+const UNLOADED_VIDEO: VideoData | null = null;
+const INVALID_VIDEO: VideoData | null = {Frames: []};
+
 interface VideoPlayerProps {
-    video: VideoData
+    videoId: string
 }
 
 interface VideoPlayerState {
     frameIndex: number
+    video: VideoData | null
+}
+
+interface VideoDataWapper {
+    content: {Video: VideoData}
+    message: string
 }
 
 export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayerState> {
-    timerId: any;
+    timerId: any = null;
     canStartPlaying: boolean = false;
 
     constructor(props : VideoPlayerProps) {
         super(props);
         this.state = {
-            frameIndex: 0
+            frameIndex: 0,
+            video: UNLOADED_VIDEO
         };
     }
-    componentDidMount() {
-        this.timerId = setInterval( () => {
-            // the minus one makes no sense in my eyes, however it leads to smooth playback, so I'm not complaining
-            if (this.state.frameIndex >= this.props.video.Frames.length - 1) {
+    componentDidMount = () => {
+        this.fetchVideoFromApi();
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(this.timerId)
+    }
+
+    startPlaying = () => {
+        this.timerId = setInterval(this.increaseFrame, 10);
+    }
+
+    increaseFrame = () => {
+        if (this.state.video === null || this.state.video === INVALID_VIDEO) {
+        } else {
+            // reset frames if over the limit
+            if (this.state.frameIndex > this.state.video.Frames.length - 2) {
                 this.setState({
                     frameIndex: 0
                 });
-            } else if (this.canStartPlaying){
+            } else {
                 this.setState((state, props) => ({
                     frameIndex: state.frameIndex + 1
                 }));
             }
-        }, 1
-        );
+        }
     }
-    componentWillUnmount() {
-        clearInterval(this.timerId)
+
+    async fetchVideoFromApi() {
+        let httpCode:number = 0;
+        let videoDataFetched: VideoData | null = UNLOADED_VIDEO;
+        await fetch(backendURL + '/video/getContent?id=' + this.props.videoId)
+        .then((response: Response) => {
+            httpCode = response.status;
+            return response.json();
+        })
+        .then((json) => {
+            let apiData: VideoDataWapper = json as VideoDataWapper;
+            videoDataFetched = apiData.content.Video;
+        }).catch( e => {
+            videoDataFetched = INVALID_VIDEO;
+        });
+        if (httpCode === 0) {
+            this.setState({
+                video: UNLOADED_VIDEO
+            });
+        } else if (httpCode === 200) {
+            this.setState({
+                video: videoDataFetched
+            });
+        } else if (httpCode === 400 || httpCode === 404) {
+            this.setState({
+                video: INVALID_VIDEO
+            });
+        } else {
+            this.setState({
+                video: INVALID_VIDEO
+            });
+        }
     }
 
     render() {
-        if (this.props.video.Frames[this.state.frameIndex] === undefined) {
+        if (this.state.video === null) {
             return <p>Video loading...</p>
+        }
+        if (this.state.video === INVALID_VIDEO) {
+            return <p>INVALID video ID</p>
         }
         this.canStartPlaying = true;
         return (
             <div className="video-player-frame">
                 {
-                    this.props.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
+                    this.state.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
                         <pre className="video-player-row" key={index}>{row}</pre>
                     )
                 }  
-                <p>{this.state.frameIndex}</p>    
+                <p>{this.state.frameIndex}</p> 
+                <button onClick={this.startPlaying}>Play</button>   
             </div>
         )
     }
 }
+
