@@ -13,6 +13,7 @@ interface VideoPlayerProps {
 interface VideoPlayerState {
     frameIndex: number
     video: VideoData | null
+    isPlaying: boolean
 }
 
 interface VideoDataWapper {
@@ -28,7 +29,8 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
         super(props);
         this.state = {
             frameIndex: 0,
-            video: UNLOADED_VIDEO
+            video: UNLOADED_VIDEO,
+            isPlaying: false
         };
     }
     componentDidMount = () => {
@@ -36,11 +38,21 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
     }
 
     componentWillUnmount = () => {
+        this.stopPlaying();
+    }
+
+    stopPlaying = () => {
         clearInterval(this.timerId)
+        this.setState({
+            isPlaying: false
+        });
     }
 
     startPlaying = () => {
-        this.timerId = setInterval(this.increaseFrame, 10);
+        this.timerId = setInterval(this.increaseFrame, 1);
+        this.setState({
+            isPlaying: true
+        });
     }
 
     increaseFrame = () => {
@@ -102,15 +114,14 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
         this.canStartPlaying = true;
         return (
             <div className="video-player-frame">
-                {
-                    this.state.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
+                {this.state.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
                         <pre className="video-player-row" key={index}>{row}</pre>
                     )
                 }  
                 <p>{this.state.frameIndex}</p> 
-                <button onClick={this.startPlaying}>Play</button>   
+                <button key={this.state.isPlaying as unknown as number} onClick={this.state.isPlaying?this.stopPlaying:this.startPlaying}>{this.state.isPlaying? "Pause" : "Play"}</button>   
             </div>
-        )
+        );
     }
 }
 
