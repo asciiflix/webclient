@@ -8,8 +8,9 @@
 
 .video-info-title {
     font-weight: 400;
+    margin-bottom: 0px;
 }
 
 .video-info-data {
-
+    margin-top: 5px;
 }
