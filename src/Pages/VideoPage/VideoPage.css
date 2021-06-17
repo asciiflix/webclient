@@ -1,0 +1,15 @@
+.video-page-container {
+    display: grid;
+    grid-column-gap: 40px;
+    grid-row-gap: 0px;
+    padding-top: 40px;
+    grid-template-rows: min-content 1fr;
+}
+
+.video-info-title {
+    font-weight: 400;
+}
+
+.video-info-data {
+
+}

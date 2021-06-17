@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { backendURL } from '../../Config';
 import VideoData from '../../Models/VideoModel'
 import "./VideoPlayer.css"
+import playSvg from "./play.svg"
+import pauseSvg from "./pause.svg"
 
 const UNLOADED_VIDEO: VideoData | null = null;
 const INVALID_VIDEO: VideoData | null = {Frames: []};
@@ -14,6 +16,7 @@ interface VideoPlayerState {
     frameIndex: number
     video: VideoData | null
     isPlaying: boolean
+    fistPlayOver: boolean
 }
 
 interface VideoDataWapper {
@@ -30,7 +33,8 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
         this.state = {
             frameIndex: 0,
             video: UNLOADED_VIDEO,
-            isPlaying: false
+            isPlaying: false,
+            fistPlayOver: false,
         };
     }
     componentDidMount = () => {
@@ -51,7 +55,8 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
     startPlaying = () => {
         this.timerId = setInterval(this.increaseFrame, 1);
         this.setState({
-            isPlaying: true
+            isPlaying: true,
+            fistPlayOver: true
         });
     }
 
@@ -104,6 +109,23 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
         }
     }
 
+    addButtonSeenStyleCode = () => {
+        // TODO: find a propper way to implement the play button being visible at first play
+        if (this.state.fistPlayOver) {
+            return <style>{"\
+                .video-player-play-button {\
+                    opacity: 0;\
+                }\
+            "}</style>
+        } else {
+            return <style>{"\
+                .video-player-play-button {\
+                    opacity: 1;\
+                }\
+            "}</style>
+        }
+    }
+
     render() {
         if (this.state.video === null) {
             return <p>Video loading...</p>
@@ -113,13 +135,17 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
         }
         this.canStartPlaying = true;
         return (
-            <div className="video-player-frame">
-                {this.state.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
-                        <pre className="video-player-row" key={index}>{row}</pre>
-                    )
-                }  
-                <p>{this.state.frameIndex}</p> 
-                <button key={this.state.isPlaying as unknown as number} onClick={this.state.isPlaying?this.stopPlaying:this.startPlaying}>{this.state.isPlaying? "Pause" : "Play"}</button>   
+            <div className="video-player-container">
+                {this.addButtonSeenStyleCode()}
+                <div className="video-row-container">
+                    {this.state.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
+                            <pre className="video-player-row" key={index}>{row}</pre>
+                            )
+                        }  
+                </div>
+                <button className="video-player-play-button" onClick={this.state.isPlaying?this.stopPlaying:this.startPlaying}>
+                    <img src={this.state.isPlaying? pauseSvg : playSvg} alt="play/pause"/>
+                </button>   
             </div>
         );
     }

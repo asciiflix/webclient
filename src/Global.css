@@ -6,4 +6,7 @@
     --title-bar-color: #ffffff;
     --title-text-color: #000000;
     --video-screen-color: #323232;
+
+    --recomendation-bar-color: #DEDEDE;
+    --recomendation-bar-min-width: 200px;
 }
