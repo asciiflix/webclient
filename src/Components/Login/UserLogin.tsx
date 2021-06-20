@@ -1,7 +1,7 @@
 import React, { Component, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { backendURL } from "../../Config";
-import "./UserLogin.css"
+import "./UserLogin.css";
 
 interface LoginInformation {
     email: string
