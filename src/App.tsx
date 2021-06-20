@@ -4,6 +4,7 @@ import TitleBar from './Common/TitleBar/TitleBar';
 import HomePage from './Pages/HomePage';
 import LoginPage from './Pages/LoginPage';
 import "./App.css"
+import "./Global.css"
 import VideoPage from './Pages/VideoPage/VideoPage';
 
 export default class App extends React.Component {

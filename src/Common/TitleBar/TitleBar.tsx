@@ -7,10 +7,10 @@ export default class TitleBar extends Component {
         return (
             <nav className="title-bar-main-box">
                 <div className="title-bar-content-box">
-                    <p className="title-bar-title">Asciiflix</p>
+                    <Link to="/" className="title-bar-title">Asciiflix</Link>
                     <div className="title-bar-links">
-                        <p className="title-bar-page"><Link to="/">Home</Link></p>
-                        <p className="title-bar-page"><Link to="/login">Login</Link></p>
+                        <Link className="title-bar-page" to="/">Home</Link>
+                        <Link className="title-bar-page" to="/login">Login</Link>
                     </div>
                 </div>
             </nav>

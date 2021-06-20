@@ -1,0 +1,12 @@
+:root {
+    --main-content-width: 1200px;
+    --main-background-color: #EDEDED;
+    --content-padding-width: 50px;
+
+    --title-bar-color: #ffffff;
+    --title-text-color: #000000;
+    --video-screen-color: #323232;
+
+    --recomendation-bar-color: #DEDEDE;
+    --recomendation-bar-min-width: 200px;
+}

@@ -1,29 +1,32 @@
 .title-bar-main-box {
-    background-color: rgb(219, 219, 219);
+    background-color: var(--title-bar-color);
 }
 
 .title-bar-content-box {
-    max-width: 1000px;
+    max-width: var(--main-content-width);
+    padding: 30px var(--content-padding-width);
     margin: 0 auto;
-    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .title-bar-title {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 24px;
+    font-size: 36px;
     margin: 0px;
-    display: inline;
-    margin-right: 750px;
+    display: flex;
+    text-decoration: none;
+    color: var(--title-text-color);
 }
 
 .title-bar-page {
-    display: inline;
+    display: flex;
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--title-text-color);
 }
 
 .title-bar-links {
-    display: inline;
-}
-
-.title-bar-page{
-    margin-left: 10px;
+    display: flex;
+    align-items: center;
 }
