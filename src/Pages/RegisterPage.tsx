@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import UserLogin from "../Components/Login/UserLogin";
+import UserRegistration from "../Components/Register/UserRegistration";
 
 
-export default class LoginPage extends Component {
+export default class RegisterPage extends Component {
 
     render() {
         return (
             <div className="login-container">
                 <br></br>
-               <UserLogin></UserLogin>
+               <UserRegistration></UserRegistration>
             </div>
         )
     }

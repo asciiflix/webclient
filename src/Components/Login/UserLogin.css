@@ -1,0 +1,42 @@
+.login-form-container {
+  background-color: white;
+  width: 320px;
+  height: 250px;
+  border-radius: 7px;
+  margin: 0 auto;
+  display: grid;
+}
+
+.form-input {
+  background-color: var(--recomendation-bar-color);
+  width: 98%;
+  height: 30px;
+  border-radius: 10px;
+  margin-bottom: 2%;
+}
+
+.empty-div{
+    width: 250px;
+    margin: 0 auto;
+}
+
+.text{
+    color: black;
+    text-decoration: none;
+    margin-left: 1%;
+}
+
+.login-button{
+    font-family: 'IBM Plex Mono', monospace;
+    float: right;
+    margin-top: 1%;
+}
+
+@media screen and (min-width: 768px) {
+    .login-form-container{
+        width: 450px;
+    }
+    .empty-div{
+        width: 360px;
+    }
+}

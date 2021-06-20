@@ -6,6 +6,7 @@ import LoginPage from './Pages/LoginPage';
 import "./App.css"
 import "./Global.css"
 import VideoPage from './Pages/VideoPage/VideoPage';
+import RegisterPage from './Pages/RegisterPage';
 
 export default class App extends React.Component {
   render() {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage}/>
                 <Route path="/login" component={LoginPage}/>
+                <Route path="/register" component={RegisterPage}/>
                 <Route path="/" component={HomePage}/>
               </Switch>
             </div>
