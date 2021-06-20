@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 
 export default class HomePage extends Component {
     static contextType = UserContext;

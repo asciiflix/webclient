@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserRegistration from "../Components/Register/UserRegistration";
+import UserRegistration from "../../Components/Register/UserRegistration";
 
 
 export default class RegisterPage extends Component {
