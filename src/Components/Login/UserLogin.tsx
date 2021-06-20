@@ -38,7 +38,8 @@ export default class UserLogin extends Component {
             .then(json => jwtToken = json.jwt);
         if (httpCode === 200) {
             localStorage.setItem("jwt", jwtToken);
-            console.log("Login suc");
+            //Redirect
+            //return <Redirect to={"/home"}></Redirect>;
         } else {
             console.log("Error Login");
         }

@@ -1,6 +1,6 @@
 import React, { Component, SyntheticEvent } from 'react';
 import { backendURL } from "../../Config";
-import "./UserRegistration.css"
+import "./UserRegistration.css";
 
 interface RegisterInformation {
     username: string
@@ -40,7 +40,7 @@ export default class UserRegistration extends Component {
             })
             .then(json => console.log(json.message));
         if (httpCode === 201) {
-            console.log("User Created");
+         //Redirect
         } else {
             console.log("Error Creating User");
         }
