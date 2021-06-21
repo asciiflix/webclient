@@ -10,6 +10,7 @@ import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
+import { backendURL } from './Config';
 
 
 interface AppProps {
@@ -29,7 +30,7 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
 
     this.getInformation();
   }
-  componentDidMount(){
+  componentDidMount() {
     this.setState(this.getInformation());
   }
 
@@ -44,15 +45,32 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
 
   getInformation = () => {
     let userJWT: string = localStorage.getItem("jwt") as string;
-    let username: any = this.jwt_decode(userJWT);
+    let userID: any = this.jwt_decode(userJWT);
     let usrCtxt: UserLoginContext;
 
-    if (userJWT === null || username === null) {
+    if (userJWT === null || userID === null) {
       usrCtxt = new UserLoginContext("", "", this.state.rerender);
     } else {
-      usrCtxt = new UserLoginContext(username["User_ID"], userJWT, this.state.rerender);
+      this.getUserNameFromAPI(userID["User_ID"]);      
+      usrCtxt = new UserLoginContext(userJWT, this.state.username, this.state.rerender);
     }
     return usrCtxt;
+  }
+
+  async getUserNameFromAPI(userID: string) {
+    let httpCode: number = 0;
+    let fetchedUsername: string = "";
+    await fetch(backendURL + "/user/getUser?id=" + userID)
+      .then(response => {
+        httpCode = response.status;
+        return response.json();
+      })
+      .then(json => fetchedUsername = json.Name);
+    if (httpCode === 200) {
+      this.setState({ username: fetchedUsername});
+      } else {
+        this.setState({ username: "UltraSecretUser"});
+    }
   }
 
   render() {
@@ -60,7 +78,7 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
       <div>
         <Router>
           <UserContext.Provider value={this.state}>
-            <TitleBar username={this.state.username}/>
+            <TitleBar username={this.state.username} />
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
