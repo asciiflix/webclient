@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import UserLogin from "../Components/Login/UserLogin";
-import { UserContext } from "../UserContext";
+import UserLogin from "../../Components/Login/UserLogin";
+import { UserContext } from "../../UserContext";
 
 
 export default class LoginPage extends Component {

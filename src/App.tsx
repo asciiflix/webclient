@@ -2,13 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import TitleBar from './Common/TitleBar/TitleBar';
-import Logout from './Components/Logout/Logout';
-import "./Global.css";
-import HomePage from './Pages/HomePage';
-import LoginPage from './Pages/LoginPage';
-import RegisterPage from './Pages/RegisterPage';
+import HomePage from './Pages/HomePage/HomePage';
+import LoginPage from './Pages/LoginPage/LoginPage';
+import "./App.css"
+import "./Global.css"
 import VideoPage from './Pages/VideoPage/VideoPage';
+import RegisterPage from './Pages/LoginPage/RegisterPage';
 import { UserContext } from './UserContext';
+import Logout from './Components/Logout/Logout';
 
 export default class App extends React.Component {
   jwt_decode = (input: string) => {

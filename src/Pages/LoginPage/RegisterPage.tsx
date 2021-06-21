@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import UserRegistration from "../Components/Register/UserRegistration";
-import { UserContext } from "../UserContext";
+import UserRegistration from "../../Components/Register/UserRegistration";
+import { UserContext } from "../../UserContext";
 
 
 export default class RegisterPage extends Component {
