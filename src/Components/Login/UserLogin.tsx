@@ -10,6 +10,8 @@ interface Status {
 
 interface StatusState {
     isLoggedIn: boolean
+    hasFailedLogin: boolean
+    jwtToken: string
 }
 
 interface LoginInformation {
@@ -27,7 +29,9 @@ export default class UserLogin extends Component<Status, StatusState> {
     constructor(props: StatusState) {
         super(props);
         this.state = {
-            isLoggedIn: false
+            isLoggedIn: false,
+            hasFailedLogin: false,
+            jwtToken: ""
         };
     }
 
@@ -35,8 +39,9 @@ export default class UserLogin extends Component<Status, StatusState> {
     submit_login = (e: SyntheticEvent) => {
         e.preventDefault();
         this.loginCallApi();
-        console.log(this.context);
     }
+
+    setNewInfo = () => {}
 
     async loginCallApi() {
         let httpCode: number = 0;
@@ -55,21 +60,29 @@ export default class UserLogin extends Component<Status, StatusState> {
             })
             .then(json => userJWTToken = json.jwt);
         if (httpCode === 200) {
-            localStorage.setItem("jwt", userJWTToken);
-            this.setState({ isLoggedIn: true });
+            this.setState({ isLoggedIn: true, jwtToken: userJWTToken});
         } else {
-            console.log("Error Login");
+            this.setState({hasFailedLogin:true})
         }
     }
 
+    finalizeLogin = (jwtSetter: Function, rerender: Function) => {
+        localStorage.setItem("jwt", this.state.jwtToken);
+        rerender(this.state.jwtToken, "Ultramannnn");
+        return <Redirect to="/"></Redirect>;
+    }
 
     render() {
         return (
             <div className="login-form-container">
-                {this.state.isLoggedIn ? <Redirect to="/"></Redirect> :
+            <UserContext.Consumer>
+                {({jwtToken, username, setUsername, setJwtToken, rerender}) => (
+                // TODO remove error from calling this, maybe move to async somehow?!
+                this.state.isLoggedIn ? this.finalizeLogin(setJwtToken, rerender) :
                     <form onSubmit={this.submit_login}>
                         <div className="empty-div">
                             <h1>Login</h1>
+                            {this.state.hasFailedLogin?<p className="login-form-failed-login">Login Failed, please try again</p>:<></>}
                             <label>Email</label>
                             <input className="form-input" type="email" placeholder="E-Mail" required onChange={e => this.login.email = e.target.value}></input>
 
@@ -77,10 +90,11 @@ export default class UserLogin extends Component<Status, StatusState> {
                             <input className="form-input" type="password" placeholder="Password" required onChange={e => this.login.password = e.target.value}></input>
 
                             <Link className="text" to="/register">Register</Link>
-                            <button className="login-button" type="submit">Login</button>
+                            <button className="login-button" type="submit" onClick={()=>{setUsername("hello")}}>Login</button>
                         </div>
                     </form>
-                }
+                )}
+            </UserContext.Consumer>
             </div>
         )
     }

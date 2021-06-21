@@ -1,7 +1,8 @@
 .login-form-container {
   background-color: white;
-  width: 320px;
-  height: 250px;
+  /* TODO Make this dynamic */
+  width: 400px;
+  height: 400px;
   border-radius: 7px;
   margin: 0 auto;
   display: grid;
@@ -30,6 +31,10 @@
     font-family: 'IBM Plex Mono', monospace;
     float: right;
     margin-top: 1%;
+}
+
+.login-form-failed-login {
+    color: red;
 }
 
 @media screen and (min-width: 768px) {

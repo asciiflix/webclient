@@ -8,10 +8,31 @@ import "./App.css"
 import "./Global.css"
 import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
-import { UserContext } from './UserContext';
-import Logout from './Components/Logout/Logout';
+import UserLoginContext, { UserContext } from './UserContext';
+import Logout from './Pages/LogoutPage/Logout';
 
-export default class App extends React.Component {
+
+interface AppProps {
+
+}
+
+export default class App extends React.Component<AppProps, UserLoginContext>{
+
+  constructor(props: AppProps) {
+    super(props);
+    this.state = new UserLoginContext("", "", (jwtToken: string, username: string) => {
+      this.setState({
+        jwtToken: jwtToken,
+        username: username
+      })
+    });
+
+    this.getInformation();
+  }
+  componentDidMount(){
+    this.setState(this.getInformation());
+  }
+
   jwt_decode = (input: string) => {
     if (input !== null) {
       var parts = input.split('.'); // header, payload, signature
@@ -23,21 +44,23 @@ export default class App extends React.Component {
 
   getInformation = () => {
     let userJWT: string = localStorage.getItem("jwt") as string;
-    let username: string = this.jwt_decode(userJWT);
+    let username: any = this.jwt_decode(userJWT);
+    let usrCtxt: UserLoginContext;
 
     if (userJWT === null || username === null) {
-      return null;
+      usrCtxt = new UserLoginContext("", "", this.state.rerender);
     } else {
-      return { jwtToken: userJWT, username: username};
+      usrCtxt = new UserLoginContext(username["User_ID"], userJWT, this.state.rerender);
     }
+    return usrCtxt;
   }
 
   render() {
     return (
       <div>
         <Router>
-          <UserContext.Provider value={this.getInformation()}>
-            <TitleBar />
+          <UserContext.Provider value={this.state}>
+            <TitleBar username={this.state.username}/>
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />

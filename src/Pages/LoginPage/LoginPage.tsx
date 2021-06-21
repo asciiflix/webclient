@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import UserLogin from "../../Components/Login/UserLogin";
-import { UserContext } from "../../UserContext";
+import { EMPTY_USER_CONTEXT, UserContext } from "../../UserContext";
 
 
 export default class LoginPage extends Component {
     static contextType = UserContext;
 
     getUserState = () => {
-        if (this.context === null) {
+        if (this.context === EMPTY_USER_CONTEXT || this.context.jwtToken === "") {
             return false;
         } else {
             return true;
