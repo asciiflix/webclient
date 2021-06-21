@@ -1,19 +1,22 @@
 .login-form-container {
   background-color: white;
   /* TODO Make this dynamic */
-  width: 400px;
-  height: 400px;
   border-radius: 7px;
   margin: 0 auto;
+  max-width: fit-content;
   display: grid;
+  padding: 3em;
+  padding-bottom: 5em;
 }
 
 .form-input {
-  background-color: var(--recomendation-bar-color);
+  background-color: var(--input-field-color);
+  border-style: solid;
   width: 98%;
   height: 30px;
   border-radius: 10px;
-  margin-bottom: 2%;
+  margin-bottom: 8%;
+  margin-top: 5px;
 }
 
 .empty-div{
@@ -22,8 +25,7 @@
 }
 
 .text{
-    color: black;
-    text-decoration: none;
+    color: #949494;
     margin-left: 1%;
 }
 
@@ -31,17 +33,20 @@
     font-family: 'IBM Plex Mono', monospace;
     float: right;
     margin-top: 1%;
+    background-color: var(--input-field-color);
+    border-style: solid;
+    border-radius: 4px;
+    padding: 3px 7px;
 }
 
 .login-form-failed-login {
     color: red;
 }
 
-@media screen and (min-width: 768px) {
-    .login-form-container{
-        width: 450px;
-    }
-    .empty-div{
-        width: 360px;
-    }
+.form-label-text {
+}
+
+
+.form-title-text {
+    font-weight: 400;
 }
