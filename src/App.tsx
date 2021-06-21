@@ -1,23 +1,41 @@
-import React from 'react'
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
 import TitleBar from './Common/TitleBar/TitleBar';
+import Logout from './Components/Logout/Logout';
+import "./Global.css";
 import HomePage from './Pages/HomePage';
 import LoginPage from './Pages/LoginPage';
-import "./App.css"
-import "./Global.css"
-import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/RegisterPage';
+import VideoPage from './Pages/VideoPage/VideoPage';
 import { UserContext } from './UserContext';
-import Logout from './Components/Logout/Logout';
 
 export default class App extends React.Component {
-  userJWT = localStorage.getItem("jwt");
+  jwt_decode = (input: string) => {
+    if (input !== null) {
+      var parts = input.split('.'); // header, payload, signature
+      return JSON.parse(atob(parts[1]));
+    } else {
+      return null
+    }
+  }
+
+  getInformation = () => {
+    let userJWT: string = localStorage.getItem("jwt") as string;
+    let username: string = this.jwt_decode(userJWT);
+
+    if (userJWT === null || username === null) {
+      return null;
+    } else {
+      return { jwtToken: userJWT, username: username};
+    }
+  }
 
   render() {
     return (
       <div>
         <Router>
-          <UserContext.Provider value={this.userJWT}>
+          <UserContext.Provider value={this.getInformation()}>
             <TitleBar />
             <div className="main-content">
               <Switch>

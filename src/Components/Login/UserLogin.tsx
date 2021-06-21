@@ -1,28 +1,46 @@
 import React, { Component, SyntheticEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { backendURL } from "../../Config";
+import { UserContext } from '../../UserContext';
 import "./UserLogin.css";
+
+interface Status {
+    isLoggedIn: boolean
+}
+
+interface StatusState {
+    isLoggedIn: boolean
+}
 
 interface LoginInformation {
     email: string
     password: string
 }
 
-export default class UserLogin extends Component {
+export default class UserLogin extends Component<Status, StatusState> {
+    static contextType = UserContext;
     login: LoginInformation = {
         email: "",
         password: ""
     };
 
+    constructor(props: StatusState) {
+        super(props);
+        this.state = {
+            isLoggedIn: false
+        };
+    }
+
 
     submit_login = (e: SyntheticEvent) => {
         e.preventDefault();
         this.loginCallApi();
+        console.log(this.context);
     }
 
     async loginCallApi() {
         let httpCode: number = 0;
-        let jwtToken: string = "";
+        let userJWTToken: string = "";
         await fetch(backendURL + "/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -35,11 +53,10 @@ export default class UserLogin extends Component {
                 httpCode = response.status;
                 return response.json();
             })
-            .then(json => jwtToken = json.jwt);
+            .then(json => userJWTToken = json.jwt);
         if (httpCode === 200) {
-            localStorage.setItem("jwt", jwtToken);
-            //Redirect
-            //return <Redirect to={"/home"}></Redirect>;
+            localStorage.setItem("jwt", userJWTToken);
+            this.setState({ isLoggedIn: true });
         } else {
             console.log("Error Login");
         }
@@ -49,19 +66,21 @@ export default class UserLogin extends Component {
     render() {
         return (
             <div className="login-form-container">
-                <form onSubmit={this.submit_login}>
-                    <div className="empty-div">
-                        <h1>Login</h1>
-                        <label>Email</label>
-                        <input className="form-input" type="email" placeholder="E-Mail" required onChange={e => this.login.email = e.target.value}></input>
+                {this.state.isLoggedIn ? <Redirect to="/"></Redirect> :
+                    <form onSubmit={this.submit_login}>
+                        <div className="empty-div">
+                            <h1>Login</h1>
+                            <label>Email</label>
+                            <input className="form-input" type="email" placeholder="E-Mail" required onChange={e => this.login.email = e.target.value}></input>
 
-                        <label>Password</label>
-                        <input className="form-input" type="password" placeholder="Password" required onChange={e => this.login.password = e.target.value}></input>
+                            <label>Password</label>
+                            <input className="form-input" type="password" placeholder="Password" required onChange={e => this.login.password = e.target.value}></input>
 
-                        <Link className="text" to="/register">Register</Link>
-                        <button className="login-button" type="submit">Login</button>
-                    </div>
-                </form>
+                            <Link className="text" to="/register">Register</Link>
+                            <button className="login-button" type="submit">Login</button>
+                        </div>
+                    </form>
+                }
             </div>
         )
     }

@@ -1,4 +1,5 @@
 import React, { Component, SyntheticEvent } from 'react';
+import { Redirect } from 'react-router-dom';
 import { backendURL } from "../../Config";
 import "./UserRegistration.css";
 
@@ -8,13 +9,28 @@ interface RegisterInformation {
     password: string
 }
 
-export default class UserRegistration extends Component {
+interface Status {
+    isRegistered: boolean
+}
+
+interface StatusState {
+    isRegistered: boolean
+}
+
+export default class UserRegistration extends Component<Status, StatusState> {
 
     register: RegisterInformation = {
         username: "",
         email: "",
         password: ""
     };
+
+    constructor(props: StatusState) {
+        super(props);
+        this.state = {
+            isRegistered: props.isRegistered
+        };
+    }
 
 
     submit_register = (e: SyntheticEvent) => {
@@ -40,7 +56,7 @@ export default class UserRegistration extends Component {
             })
             .then(json => console.log(json.message));
         if (httpCode === 201) {
-         //Redirect
+            this.setState({ isRegistered: true })
         } else {
             console.log("Error Creating User");
         }
@@ -49,23 +65,24 @@ export default class UserRegistration extends Component {
     render() {
         return (
             <div className="register-form-container">
-                <form onSubmit={this.submit_register}>
-                    <div className="empty-div">
-                        <h1>Register</h1>
-                        <label>Username</label>
-                        <input className="form-input" type="name" placeholder="Username" required onChange={e => this.register.username = e.target.value}></input>
+                {this.state.isRegistered ? <Redirect to="/login"></Redirect> :                    
+                    <form onSubmit={this.submit_register}>                       
+                        <div className="empty-div">
+                            <h1>Register</h1>
+                            <label>Username</label>
+                            <input className="form-input" type="name" placeholder="Username" required onChange={e => this.register.username = e.target.value}></input>
 
-                        <label>Email</label>
-                        <input className="form-input" type="email" placeholder="E-Mail" required onChange={e => this.register.email = e.target.value}></input>
+                            <label>Email</label>
+                            <input className="form-input" type="email" placeholder="E-Mail" required onChange={e => this.register.email = e.target.value}></input>
 
-                        <label>Password</label>
-                        <input className="form-input" type="password" placeholder="Password" required onChange={e => this.register.password = e.target.value}></input>
+                            <label>Password</label>
+                            <input className="form-input" type="password" placeholder="Password" required onChange={e => this.register.password = e.target.value}></input>
 
-                        <button className="login-button" type="submit">Register</button>
-                    </div>
-                </form>
+                            <button className="login-button" type="submit">Register</button>
+                        </div>
+                    </form>
+                }
             </div>
         )
-
     }
 }
