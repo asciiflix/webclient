@@ -81,12 +81,12 @@ export default class UserLogin extends Component<Status, StatusState> {
                 this.state.isLoggedIn ? this.finalizeLogin(setJwtToken, rerender) :
                     <form onSubmit={this.submit_login}>
                         <div className="empty-div">
-                            <h1>Login</h1>
+                            <h1 className="form-title-text">Login</h1>
                             {this.state.hasFailedLogin?<p className="login-form-failed-login">Login Failed, please try again</p>:<></>}
-                            <label>Email</label>
+                            <label className="form-label-text">Email</label>
                             <input className="form-input" type="email" placeholder="E-Mail" required onChange={e => this.login.email = e.target.value}></input>
 
-                            <label>Password</label>
+                            <label className="form-label-text">Password</label>
                             <input className="form-input" type="password" placeholder="Password" required onChange={e => this.login.password = e.target.value}></input>
 
                             <Link className="text" to="/register">Register</Link>

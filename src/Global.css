@@ -2,6 +2,7 @@
     --main-content-width: 1200px;
     --main-background-color: #EDEDED;
     --content-padding-width: 50px;
+    --content-padding-width-mobile: 10px;
 
     --title-bar-color: #ffffff;
     --title-text-color: #000000;
@@ -9,4 +10,6 @@
 
     --recomendation-bar-color: #DEDEDE;
     --recomendation-bar-min-width: 200px;
+    
+    --input-field-color: #F9F9F9;
 }

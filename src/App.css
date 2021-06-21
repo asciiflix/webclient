@@ -10,3 +10,9 @@ body {
     margin: 0 auto;
     padding: 0 var(--content-padding-width);
 }
+
+@media screen and (max-width: 1300px) {
+    .main-content {
+        padding: 0 var(--content-padding-width-mobile);
+    }
+}
