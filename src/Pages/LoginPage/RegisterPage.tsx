@@ -18,9 +18,7 @@ export default class RegisterPage extends Component {
     render() {
         return (
             <div className="login-container">
-                {this.getUserState() ? <Redirect to="/"></Redirect> :
-                    <br></br>
-                }
+                {this.getUserState() ? <Redirect to="/"></Redirect> : <br></br> }
                 <UserRegistration isRegistered={false}></UserRegistration>
             </div>
         )
