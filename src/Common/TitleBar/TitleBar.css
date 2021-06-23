@@ -22,8 +22,12 @@
 .title-bar-page {
     display: flex;
     margin-left: 20px;
-    text-decoration: none;
     color: var(--title-text-color);
+    text-decoration: none;
+}
+
+.title-bar-page-link {
+    text-decoration: none;
 }
 
 .title-bar-links {
