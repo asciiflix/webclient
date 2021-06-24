@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import tabIcon from "./tabs.svg"
 import "../TitleBar/TitleBar.css";
@@ -53,13 +53,13 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     
     render() {
         if (this.props.username === ""){
-            return <Link to="/login" className="title-bar-page-link"><p className="title-bar-page">Login</p> <img className="title-bar-icon" src={tabIcon}/></Link>
+            return <Link to="/login" className="title-bar-page-link"><p className="title-bar-page">Login</p> <img className="title-bar-icon" src={tabIcon} alt="Tab Icon"/></Link>
         }
         return (
             <div>
                 {/* <Link to="/logout"> */}
                     <p className="title-bar-page" onMouseEnter={this.showMenu} onClick={this.showMenu}>{this.props.username}</p>
-                    <img onClick={this.showMenu} className="title-bar-icon" src={tabIcon}/> 
+                    <img onClick={this.showMenu} className="title-bar-icon" src={tabIcon} alt="TabIcon"/> 
                 {/* </Link> */}
                     {this.state.showMenu ? this.renderMenu() : <></>}
             </div>

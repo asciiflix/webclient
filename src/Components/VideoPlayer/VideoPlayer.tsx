@@ -53,7 +53,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
     }
 
     startPlaying = () => {
-        this.timerId = setInterval(this.increaseFrame, 1);
+        this.timerId = setInterval(this.increaseFrame, 16);
         this.setState({
             isPlaying: true,
             fistPlayOver: true

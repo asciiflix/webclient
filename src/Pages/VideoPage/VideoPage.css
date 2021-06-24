@@ -14,3 +14,9 @@
 .video-info-data {
     margin-top: 5px;
 }
+
+@media screen and (max-width: 1300px) {
+    .video-page-container {
+        padding-top: 10px;
+    }
+}
