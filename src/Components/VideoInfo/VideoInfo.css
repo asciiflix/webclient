@@ -2,3 +2,9 @@
     grid-row-start: 2;
     grid-column-start: 1;
 }
+
+@media screen and (max-width: 1300px) {
+    .video-info-title {
+        font-size: 24px;
+    }
+}
