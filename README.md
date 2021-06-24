@@ -3,11 +3,23 @@
 ## Development
 
 Make sure node, npm, and yarn are installed.
+Also note that all dependencies (``node_modules``) should be installed, if not, run:
+```bash
+npm install
+```
+
 Then to run the development server call:
 
 ```bash
 npm start
 ```
+
+With ``npm start`` the frontend will use your local-backend ``http://localhost:8080``. If you want to use the Production API, you have to run ``npm run build`` and all files will be generated. Now you have to run a Webserver to use the frontend.
+You can do this steps:
+````bash
+npm install -g serve
+serve -s build
+````
 
 ### Development Container
 

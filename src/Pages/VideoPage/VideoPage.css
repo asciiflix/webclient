@@ -1,0 +1,22 @@
+.video-page-container {
+    display: grid;
+    grid-column-gap: 40px;
+    grid-row-gap: 0px;
+    padding-top: 40px;
+    grid-template-rows: min-content 1fr;
+}
+
+.video-info-title {
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.video-info-data {
+    margin-top: 5px;
+}
+
+@media screen and (max-width: 1300px) {
+    .video-page-container {
+        padding-top: 10px;
+    }
+}

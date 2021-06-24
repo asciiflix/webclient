@@ -1,0 +1,18 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'IBM Plex Mono', monospace;
+    background-color: var(--main-background-color);
+}
+
+.main-content {
+    max-width: var(--main-content-width);
+    margin: 0 auto;
+    padding: 0 var(--content-padding-width);
+}
+
+@media screen and (max-width: 1300px) {
+    .main-content {
+        padding: 0 var(--content-padding-width-mobile);
+    }
+}

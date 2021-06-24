@@ -1,0 +1,18 @@
+.video-preview-link {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+}
+
+.video-preview-thumbnail {
+    width: var(--video-preview-width);
+    height: 185px;
+    background-color: #323232;
+
+}
+
+.video-preview-title {
+    font-size: 18px;
+    margin-top: 10px;
+    color: black;
+}

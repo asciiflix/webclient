@@ -1,0 +1,60 @@
+.title-bar-main-box {
+    background-color: var(--title-bar-color);
+}
+
+.title-bar-content-box {
+    max-width: var(--main-content-width);
+    padding: 30px var(--content-padding-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title-bar-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 36px;
+    margin: 0px;
+    display: flex;
+    text-decoration: none;
+    color: var(--title-text-color);
+}
+
+.title-bar-page {
+    display: flex;
+    margin-left: 20px;
+    color: var(--title-text-color);
+    text-decoration: none;
+}
+
+.title-bar-page-link {
+    text-decoration: none;
+    color: var(--title-text-color);
+}
+
+.title-bar-links {
+    display: flex;
+    align-items: center;
+}
+
+.title-bar-icon {
+    display: none;
+}
+
+@media screen and (max-width: 1300px) {
+    .title-bar-title {
+        font-size: 30px;
+    }
+
+    .title-bar-content-box {
+        padding: 20px 20px;
+    }
+
+    .title-bar-page {
+        display: none;
+    }
+
+    .title-bar-icon {
+        display: inherit;
+        margin-left: 15px;
+    }
+}

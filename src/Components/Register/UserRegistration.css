@@ -1,0 +1,17 @@
+.register-form-container {
+  background-color: white;
+  width: 320px;
+  height: 310px;
+  border-radius: 7px;
+  margin: 0 auto;
+  display: grid;
+}
+
+@media screen and (min-width: 768px) {
+  .register-form-container {
+    width: 450px;
+  }
+  .empty-div {
+    width: 360px;
+  }
+}
