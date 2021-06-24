@@ -5,7 +5,7 @@
     grid-row: 1;
     min-height: 400px;
     height: fit-content;
-    padding: 50px;
+    padding: 30px;
     position: relative;
     display: flex;
 }
@@ -35,4 +35,15 @@
 
 .video-player-play-button:hover {
     opacity: 1;
+}
+
+@media screen and (max-width: 1300px) {
+    .video-player-container {
+        font-size: 1.4vw;
+        padding: 10px;
+        min-height: 0;
+    }
+    .video-row-container {
+        margin: 0 auto;
+    }
 }

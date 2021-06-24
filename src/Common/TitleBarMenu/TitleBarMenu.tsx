@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import tabIcon from "./tabs.svg"
 import "../TitleBar/TitleBar.css";
