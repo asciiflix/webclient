@@ -21,7 +21,6 @@ export default class TitleBar extends Component<TitlebarProps> {
                     <div className="title-bar-links">
                         <Link to="/" className="title-bar-page-link"><p className="title-bar-page">Search</p><img className="title-bar-icon" src={searchIcon}/> </Link>
                         <TitleBarMenu username={this.props.username}></TitleBarMenu>
-                    
                     </div>
                 </div>
             </nav>

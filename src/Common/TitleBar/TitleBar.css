@@ -28,12 +28,14 @@
 
 .title-bar-page-link {
     text-decoration: none;
+    color: var(--title-text-color);
 }
 
 .title-bar-links {
     display: flex;
     align-items: center;
 }
+
 .title-bar-icon {
     display: none;
 }
@@ -54,5 +56,5 @@
     .title-bar-icon {
         display: inherit;
         margin-left: 15px;
-    }
+    
 }
