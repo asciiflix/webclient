@@ -22,15 +22,12 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     }
     
     showMenu = () => {
-        console.log("Helooooo...")
         this.setState({
             showMenu: true
         });
     }
 
     removeMenu = () => {
-        console.log("bbyyyyyyyyyyyyyeeeeee")
-
         this.setState({
             showMenu: false
         });
