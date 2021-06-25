@@ -20,6 +20,10 @@
     margin-left: 0%;
 }
 
+.form-settings-successfully{
+    color: green;
+}
+
 @media screen and (min-width: 780px) {
     .settings-grid{
         display: grid;
