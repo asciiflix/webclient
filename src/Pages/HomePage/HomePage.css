@@ -3,16 +3,10 @@
     padding: 15px;
     padding-top: 15px;
     background-color: var(--recomendation-bar-color);
-    display: grid;
-    column-gap: 15px;
-    grid-auto-columns: 200px;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fill, minmax(var(--video-preview-width), 1fr));
 }
 
 @media screen and (min-width: 1300px) {
     .home-page-container {
         margin-top: 40px;
-        grid-template-columns: repeat(auto-fill, minmax(var(--video-preview-width), 1fr));
     }
 }

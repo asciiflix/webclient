@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { match } from 'react-router';
-import RecomendationBar from '../../Components/RecomendationBar/RecomendationBar';
+import RecommendationBar from '../../Components/RecomendationBar/RecommendationBar';
 import VideoInfo from '../../Components/VideoInfo/VideoInfo';
 import VideoPlayer from '../../Components/VideoPlayer/VideoPlayer';
 import "./VideoPage.css"
@@ -22,7 +22,7 @@ export default class VideoPage extends Component<VideoPageProps> {
             <div className="video-page-container">
                 <VideoPlayer videoId={this.videoId}/>
                 <VideoInfo videoId={this.videoId}/>
-                <RecomendationBar/>
+                <RecommendationBar/>
             </div>
         )
     }

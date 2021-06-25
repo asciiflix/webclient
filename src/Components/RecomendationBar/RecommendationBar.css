@@ -1,4 +1,4 @@
-.recomendation-bar-container {
+.recommendation-bar-container {
     background-color: var(--recomendation-bar-color);
     min-width: var(--recomendation-bar-min-width);
     height: 1000px;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 1300px) {
-    .recomendation-bar-container {
+    .recommendation-bar-container {
         grid-row-start: 3;
         grid-column-start: 1;
         min-width: 0px;
