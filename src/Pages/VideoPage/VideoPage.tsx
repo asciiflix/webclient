@@ -16,12 +16,12 @@ export default class VideoPage extends Component<VideoPageProps> {
         super(props);
         this.videoId = this.props.match.params.videoId;
     }
- 
+
     render() {
         return (
             <div className="video-page-container">
-                <VideoPlayer videoId={this.videoId}/>
-                <VideoInfo videoId={this.videoId}/>
+                <VideoPlayer videoId={this.videoId} />
+                <VideoInfo videoId={this.videoId} />
                 <RecommendationBar/>
             </div>
         )

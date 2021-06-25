@@ -12,7 +12,6 @@ interface HomePageState {
 }
 
 export default class HomePage extends Component<HomePageProps, HomePageState> {
-
     render() {
         return (
             <div className="home-page-container">

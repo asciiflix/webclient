@@ -12,6 +12,7 @@ import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
 import jwt_decode from './Common/Helper/JwtDecoder';
 import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
+import jwtExpManager from './Common/Helper/JwtExpManager';
 
 
 interface AppProps {
@@ -36,6 +37,9 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
   }
 
   getInformation = () => {
+    //Check if JWT is expired
+    jwtExpManager();
+    //To login stuff
     let userJWT: string = localStorage.getItem("jwt") as string;
     let userID: any = jwt_decode(userJWT);
     let usrCtxt: UserLoginContext;

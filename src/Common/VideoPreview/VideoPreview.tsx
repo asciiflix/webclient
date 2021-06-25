@@ -18,7 +18,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
     constructor(props: VideoPreviewProps) {
         super(props);
         this.state = {
-            creator_name: "",
+            creator_name: ""
         }
     }
 
@@ -36,8 +36,11 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
     render() {
         return (
             <div className="video-preview-container">
-                <Link to={"/watch/" + this.props.uuid} onClick={() => window.location.reload()} className="video-preview-link"><div className="video-preview-thumbnail"></div></Link>
-                <p className="video-preview-title"><Link to={"/watch/" + this.props.uuid} onClick={() => window.location.reload()} className="video-preview-link">{this.props.title}</Link> <Link to="/user/{userName}" className="video-preview-creator">- {this.state.creator_name}</Link></p>
+                <a href={"/watch/" + this.props.uuid} className="video-preview-link"><div className="video-preview-thumbnail"></div></a>
+                <p className="video-preview-title">
+                    <a href={"/watch/" + this.props.uuid} className="video-preview-link">{this.props.title}</a>
+                    <Link to="/user/{userName}" className="video-preview-creator">- {this.state.creator_name}</Link>
+                </p>
             </div>
         )
     }

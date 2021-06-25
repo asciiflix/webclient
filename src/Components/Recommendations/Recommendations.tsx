@@ -8,7 +8,6 @@ import "./Recommendations.css";
 
 interface RecommendationsProps {
     limit: number
-
 }
 
 interface RecommendationsState {
