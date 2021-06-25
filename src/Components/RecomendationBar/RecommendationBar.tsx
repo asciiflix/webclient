@@ -3,9 +3,6 @@ import Recommendations from '../Recommendations/Recommendations';
 import "./RecommendationBar.css";
 
 export default class RecommendationBar extends Component {
-
-
-
     render() {
         return (
             <div className="recommendation-bar-container">
