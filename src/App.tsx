@@ -11,6 +11,8 @@ import RegisterPage from './Pages/LoginPage/RegisterPage';
 import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
 import { backendURL } from './Config';
+import jwt_decode from './Common/Helper/JwtDecoder';
+import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
 
 
 interface AppProps {
@@ -34,18 +36,9 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
     this.setState(this.getInformation());
   }
 
-  jwt_decode = (input: string) => {
-    if (input !== null) {
-      var parts = input.split('.'); // header, payload, signature
-      return JSON.parse(atob(parts[1]));
-    } else {
-      return null
-    }
-  }
-
   getInformation = () => {
     let userJWT: string = localStorage.getItem("jwt") as string;
-    let userID: any = this.jwt_decode(userJWT);
+    let userID: any = jwt_decode(userJWT);
     let usrCtxt: UserLoginContext;
 
     if (userJWT === null || userID === null) {
@@ -58,26 +51,10 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
   }
 
   async getUserName(userID: string) {
-    await this.getUserNameFromAPI(userID)
+    await getUserNameFromAPI(userID)
       .then(response => {
         this.setState({ username: response })
       });
-  }
-
-  async getUserNameFromAPI(userID: string) {
-    let httpCode: number = 0;
-    let fetchedUsername: string = "";
-    await fetch(backendURL + "/user/getUser?id=" + userID)
-      .then(response => {
-        httpCode = response.status;
-        return response.json();
-      })
-      .then(json => fetchedUsername = json.Name);
-    if (httpCode === 200) {
-      return fetchedUsername;
-    } else {
-      return "UltraSecretUser";
-    }
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { Component } from "react";
 import App from "../../App";
+import { getUserNameFromAPI } from "../../Common/Helper/UsernameApi";
 import VideoPreview from "../../Common/VideoPreview/VideoPreview";
 import { backendURL } from "../../Config";
 import VideoMetaDataModel from "../../Models/VideoMetadataModel";
@@ -18,7 +19,6 @@ interface RecommendationsState {
 }
 
 export default class Recommendations extends Component<RecommendationsProps, RecommendationsState>{
-    private app: App = new App(this.props);
     static contextType = UserContext;
 
     constructor(props: RecommendationsProps) {
@@ -78,11 +78,11 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
     }
 
     async addCreatorName(videos: VideoMetaDataModel[]) {
-        //Getting User/Creator - Names from API to insert in VideoData
+        // Getting User/Creator - Names from API to insert in VideoData
         videos.map(async (video, index) => {
             let creator: string = "";
             let id: string = String(video.UserId);
-            await this.app.getUserNameFromAPI(id)
+            await getUserNameFromAPI(id)
                 .then(response => {
                     creator = response;
                 });

@@ -1,6 +1,7 @@
 import React, { Component, SyntheticEvent } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import App from '../../App';
+import jwt_decode from '../../Common/Helper/JwtDecoder';
+import { getUserNameFromAPI } from '../../Common/Helper/UsernameApi';
 import { backendURL } from "../../Config";
 import { UserContext } from '../../UserContext';
 import "./UserLogin.css";
@@ -22,7 +23,6 @@ interface LoginInformation {
 }
 
 export default class UserLogin extends Component<Status, StatusState> {
-    private app: App = new App(this.props);
     static contextType = UserContext;
     login: LoginInformation = {
         email: "",
@@ -62,7 +62,7 @@ export default class UserLogin extends Component<Status, StatusState> {
             })
             .then(json => userJWTToken = json.jwt);
         //Getting User Name
-        await this.app.getUserNameFromAPI(this.app.jwt_decode(userJWTToken)["User_ID"])
+        await getUserNameFromAPI(jwt_decode(userJWTToken)["User_ID"])
             .then(response => {
                 username = response;
             });
