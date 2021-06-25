@@ -8,3 +8,4 @@ RUN npm run build --prod
 
 FROM nginx:stable-alpine
 COPY --from=build /webclient/build /usr/share/nginx/html
+COPY ./deployment/nginx.conf /etc/nginx/conf.d/default.conf
