@@ -39,7 +39,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
                 <a href={"/watch/" + this.props.uuid} className="video-preview-link"><div className="video-preview-thumbnail"></div></a>
                 <p className="video-preview-title">
                     <a href={"/watch/" + this.props.uuid} className="video-preview-link">{this.props.title}</a>
-                    <Link to="/user/{userName}" className="video-preview-creator">- {this.state.creator_name}</Link>
+                    <Link to="/user/{userName}" className="video-preview-creator"> - {this.state.creator_name}</Link>
                 </p>
             </div>
         )
