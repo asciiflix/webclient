@@ -51,10 +51,17 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
     if (userJWT === null || userID === null) {
       usrCtxt = new UserLoginContext("", "", this.state.rerender);
     } else {
-      this.getUserNameFromAPI(userID["User_ID"]);
+      this.getUserName(userID["User_ID"]);
       usrCtxt = new UserLoginContext(userJWT, this.state.username, this.state.rerender);
     }
     return usrCtxt;
+  }
+
+  async getUserName(userID: string) {
+    await this.getUserNameFromAPI(userID)
+      .then(response => {
+        this.setState({ username: response })
+      });
   }
 
   async getUserNameFromAPI(userID: string) {
@@ -67,9 +74,9 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
       })
       .then(json => fetchedUsername = json.Name);
     if (httpCode === 200) {
-      this.setState({ username: fetchedUsername });
+      return fetchedUsername;
     } else {
-      this.setState({ username: "UltraSecretUser" });
+      return "UltraSecretUser";
     }
   }
 

@@ -16,3 +16,10 @@
     margin-top: 10px;
     color: black;
 }
+
+.video-preview-creator {
+    font-size: 16px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: gray;
+}

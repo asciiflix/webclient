@@ -1,4 +1,5 @@
 import { Component } from "react";
+import App from "../../App";
 import VideoPreview from "../../Common/VideoPreview/VideoPreview";
 import { backendURL } from "../../Config";
 import VideoMetaDataModel from "../../Models/VideoMetadataModel";
@@ -17,6 +18,7 @@ interface RecommendationsState {
 }
 
 export default class Recommendations extends Component<RecommendationsProps, RecommendationsState>{
+    private app: App = new App(this.props);
     static contextType = UserContext;
 
     constructor(props: RecommendationsProps) {
@@ -63,6 +65,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
             })
             .then((json) => {
                 fetchedVideoData = json as VideoMetaDataModel[];
+                this.addCreatorName(fetchedVideoData);
             })
             .catch(e => {
                 fetchedVideoData = [];
@@ -70,12 +73,24 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         if (httpCode === 200) {
             this.setState({
                 videos: fetchedVideoData
-            });
+            });          
         }
     }
 
+    async addCreatorName(videos: VideoMetaDataModel[]) {
+        //Getting User/Creator - Names from API to insert in VideoData
+        videos.map(async (video, index) => {
+            let creator: string = "";
+            let id: string = String(video.UserId);
+            await this.app.getUserNameFromAPI(id)
+                .then(response => {
+                    creator = response;
+                });
+            video.Creator = creator;
+        });
+    }
+
     componentDidMount = () => {
-        console.log()
         if (this.context.jwtToken === "") {
             this.fetchVideoDataPublic();
         } else {
@@ -84,9 +99,10 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
     }
 
     render() {
-        return (
+        console.log(this.state.videos);
+        return (            
             <div className="recommendations-container">
-                {this.state.videos.map((video, index) => <VideoPreview title={video.Title} uuid={video.UUID}></VideoPreview>)}
+                {this.state.videos.map((video, index) => <VideoPreview title={video.Title} creator={video.Creator} uuid={video.UUID}></VideoPreview>)}
             </div>
         )
     }
