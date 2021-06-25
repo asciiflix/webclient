@@ -68,7 +68,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
                 {this.state.isRegistered ? <Redirect to="/login"></Redirect> :                    
                     <form onSubmit={this.submit_register}>                       
                         <div className="empty-div">
-                            <h1>Register</h1>
+                            <h1 className="form-title-text">Register</h1>
                             <label>Username</label>
                             <input className="form-input" type="name" placeholder="Username" required onChange={e => this.register.username = e.target.value}></input>
 
