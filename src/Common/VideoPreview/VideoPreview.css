@@ -26,3 +26,9 @@
     text-decoration: none;
     color: gray;
 }
+
+@media screen and (max-width: 500px) {
+    .video-preview-thumbnail {
+        width: auto;
+    }
+}

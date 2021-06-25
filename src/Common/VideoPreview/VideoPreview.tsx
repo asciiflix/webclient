@@ -24,7 +24,6 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
 
     async updateCreatorName() {
         let username: string = await getUserNameFromAPI(this.props.creator_id.toString());
-        console.log(username)
         this.setState({
             creator_name: username 
         });
