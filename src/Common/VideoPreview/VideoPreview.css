@@ -1,7 +1,10 @@
+.video-preview-container {
+    justify-content: center;
+}
+
 .video-preview-link {
     text-decoration: none;
-    display: flex;
-    justify-content: center;
+    color: black;
 }
 
 .video-preview-thumbnail {

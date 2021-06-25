@@ -10,7 +10,6 @@ import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
-import { backendURL } from './Config';
 import jwt_decode from './Common/Helper/JwtDecoder';
 import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
 

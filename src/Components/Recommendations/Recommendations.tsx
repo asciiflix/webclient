@@ -1,6 +1,4 @@
 import { Component } from "react";
-import App from "../../App";
-import { getUserNameFromAPI } from "../../Common/Helper/UsernameApi";
 import VideoPreview from "../../Common/VideoPreview/VideoPreview";
 import { backendURL } from "../../Config";
 import VideoMetaDataModel from "../../Models/VideoMetadataModel";
@@ -65,7 +63,6 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
             })
             .then((json) => {
                 fetchedVideoData = json as VideoMetaDataModel[];
-                this.addCreatorName(fetchedVideoData);
             })
             .catch(e => {
                 fetchedVideoData = [];
@@ -77,19 +74,6 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         }
     }
 
-    async addCreatorName(videos: VideoMetaDataModel[]) {
-        // Getting User/Creator - Names from API to insert in VideoData
-        videos.map(async (video, index) => {
-            let creator: string = "";
-            let id: string = String(video.UserId);
-            await getUserNameFromAPI(id)
-                .then(response => {
-                    creator = response;
-                });
-            video.Creator = creator;
-        });
-    }
-
     componentDidMount = () => {
         if (this.context.jwtToken === "") {
             this.fetchVideoDataPublic();
@@ -99,10 +83,9 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
     }
 
     render() {
-        console.log(this.state.videos);
-        return (            
+        return (   
             <div className="recommendations-container">
-                {this.state.videos.map((video, index) => <VideoPreview title={video.Title} creator={video.Creator} uuid={video.UUID}></VideoPreview>)}
+                {this.state.videos.map((video, index) => <VideoPreview key={index} title={video.Title} creator_id={video.UserID} uuid={video.UUID}></VideoPreview>)}
             </div>
         )
     }
