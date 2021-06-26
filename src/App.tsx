@@ -7,6 +7,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import "./App.css"
 import "./Global.css"
 import VideoPage from './Pages/VideoPage/VideoPage';
+import UserProfilePage from './Pages/UserProfilePage/UserProfilePage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
@@ -82,6 +83,7 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
+                <Route path="/user/:userId" component={UserProfilePage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />
