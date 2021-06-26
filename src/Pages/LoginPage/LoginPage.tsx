@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { JwtConext } from "../../Common/JwtContext/JwtContext";
 import UserLogin from "../../Components/Login/UserLogin";
 import { EMPTY_USER_CONTEXT, UserContext } from "../../UserContext";
 
@@ -21,7 +22,11 @@ export default class LoginPage extends Component {
                 {this.getUserState() ? <Redirect to="/"></Redirect> :
                     <br></br>
                 }
-                <UserLogin isLoggedIn={this.getUserState()}></UserLogin>
+                <JwtConext.Consumer>
+                {({jwtUserInfo, changeJwt}) => 
+                    <UserLogin isLoggedIn={this.getUserState()} changeJwt={changeJwt}></UserLogin>
+                    }
+                </JwtConext.Consumer>
             </div>
         )
     }

@@ -1,27 +1,24 @@
-import { Component } from 'react'
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../UserContext';
 import "./TitleBar.css";
 import searchIcon from "./search.svg"
 import TitleBarMenu from '../TitleBarMenu/TitleBarMenu';
+import { JwtConext } from '../JwtContext/JwtContext';
 
-interface TitlebarProps {
-    username: string
-}
+import React, { Component } from 'react'
 
-export default class TitleBar extends Component<TitlebarProps> {
-    static contextType = UserContext;
-
-
+export default class TitleBar extends Component {
     render() {
         return (
             <nav className="title-bar-main-box">
-                <div className="title-bar-content-box">
-                    <Link to="/" className="title-bar-title">Asciiflix</Link>
-                    <div className="title-bar-links">
-                        <Link to="/" className="title-bar-page-link"><p className="title-bar-page">Search</p><img className="title-bar-icon" src={searchIcon} alt="Search Icon"/> </Link>
-                        <TitleBarMenu username={this.props.username}></TitleBarMenu>
-                    </div>
+            <div className="title-bar-content-box">
+                <Link to="/" className="title-bar-title">Asciiflix</Link>
+                    <JwtConext.Consumer>
+                        {({jwtUserInfo}) => 
+                            <div className="title-bar-links">
+                                <Link to="/" className="title-bar-page-link"><p className="title-bar-page">Search</p><img className="title-bar-icon" src={searchIcon} alt="Search Icon"/> </Link>
+                                <TitleBarMenu username={jwtUserInfo.username}></TitleBarMenu>
+                            </div>}
+                    </JwtConext.Consumer>
                 </div>
             </nav>
         )

@@ -63,7 +63,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
     async getPrivateUserInformation() {
         let httpCode: number = 0;
         let userData: UserModelPrivate = {};
-        let userID: string = jwt_decode(this.context.jwtToken)["User_ID"];
+        let userID: string = jwt_decode(this.context.jwtToken).User_ID;
         await fetch(backendURL + "/secure/user/getUser?id=" + userID, {
             method: "GET",
             headers: { "Token": this.context.jwtToken }
@@ -84,7 +84,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     async changeAccountInformation() {
         let httpCode: number = 0;
-        let userID: string = jwt_decode(this.context.jwtToken)["User_ID"];
+        let userID: string = jwt_decode(this.context.jwtToken).User_ID;
         await fetch(backendURL + "/secure/user/updateUser?id=" + userID, {
             method: "PUT",
             headers: { "Token": this.context.jwtToken, "Content-Type": "application/json" },
@@ -113,7 +113,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     async changePassword() {
         let httpCode: number = 0;
-        let userID: string = jwt_decode(this.context.jwtToken)["User_ID"];
+        let userID: string = jwt_decode(this.context.jwtToken).User_ID;
         await fetch(backendURL + "/secure/user/updateUser?id=" + userID, {
             method: "PUT",
             headers: { "Token": this.context.jwtToken, "Content-Type": "application/json" },
