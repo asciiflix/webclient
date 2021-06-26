@@ -40,7 +40,6 @@ export default class App extends React.Component<AppProps, AppState>{
     checkForJwtExpiration();
   }
   componentDidMount() {
-    console.log("WTF")
     let jwt: string = getJwtTokenFromStorage();
     updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: jwt}}), jwt);
   }
