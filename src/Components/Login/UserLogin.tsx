@@ -61,12 +61,12 @@ export default class UserLogin extends Component<Status, StatusState> {
                 return response.json();
             })
             .then(json => userJWTToken = json.jwt);
-        //Getting User Name
-        await getUserNameFromAPI(jwt_decode(userJWTToken)["User_ID"])
-            .then(response => {
-                username = response;
-            });
         if (httpCode === 200) {
+            //Getting User Name
+            await getUserNameFromAPI(jwt_decode(userJWTToken)["User_ID"])
+                .then(response => {
+                    username = response;
+                });
             this.setState({ isLoggedIn: true, jwtToken: userJWTToken, username: username });
         } else {
             this.setState({ hasFailedLogin: true })

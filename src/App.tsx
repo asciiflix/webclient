@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import jwt_decode from './Common/Helper/JwtDecoder';
+import jwtExpManager from './Common/Helper/JwtExpManager';
+import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
 import TitleBar from './Common/TitleBar/TitleBar';
+import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
 import LoginPage from './Pages/LoginPage/LoginPage';
-import "./App.css"
-import "./Global.css"
-import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
-import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
-import jwt_decode from './Common/Helper/JwtDecoder';
-import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
-import jwtExpManager from './Common/Helper/JwtExpManager';
+import SettingsPage from './Pages/SettingsPage/SettingsPage';
+import VideoPage from './Pages/VideoPage/VideoPage';
+import UserLoginContext, { UserContext } from './UserContext';
 
 
 interface AppProps {
@@ -69,6 +69,7 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
+                <Route path="/settings" component={SettingsPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />
