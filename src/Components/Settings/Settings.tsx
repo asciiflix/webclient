@@ -188,7 +188,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     submit_deleteAcc = (e: SyntheticEvent) => {
         e.preventDefault();
-        this.deleteAccount();    
+        this.deleteAccount();
     }
 
     finalizeNameChange = (jwtSetter: Function, usernameSetter: Function, rerender: Function) => {
@@ -197,7 +197,9 @@ export default class Settings extends Component<StatusProps, StatusState> {
     }
 
     componentDidMount() {
-        this.getPrivateUserInformation();
+        if (this.context.jwtToken !== "") {
+            this.getPrivateUserInformation();
+        }
     }
 
     render() {
