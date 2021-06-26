@@ -11,6 +11,7 @@ import RegisterPage from './Pages/LoginPage/RegisterPage';
 import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
 import { backendURL } from './Config';
+import UploadPage from './Pages/UploadPage/UploadPage';
 
 
 interface AppProps {
@@ -82,6 +83,7 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
+                <Route path="/upload" component={UploadPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />
