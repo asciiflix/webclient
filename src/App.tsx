@@ -10,7 +10,9 @@ import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
-import { backendURL } from './Config';
+import jwt_decode from './Common/Helper/JwtDecoder';
+import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
+import jwtExpManager from './Common/Helper/JwtExpManager';
 
 
 interface AppProps {
@@ -34,43 +36,28 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
     this.setState(this.getInformation());
   }
 
-  jwt_decode = (input: string) => {
-    if (input !== null) {
-      var parts = input.split('.'); // header, payload, signature
-      return JSON.parse(atob(parts[1]));
-    } else {
-      return null
-    }
-  }
-
   getInformation = () => {
+    //Check if JWT is expired
+    jwtExpManager();
+    //To login stuff
     let userJWT: string = localStorage.getItem("jwt") as string;
-    let userID: any = this.jwt_decode(userJWT);
+    let userID: any = jwt_decode(userJWT);
     let usrCtxt: UserLoginContext;
 
     if (userJWT === null || userID === null) {
       usrCtxt = new UserLoginContext("", "", this.state.rerender);
     } else {
-      this.getUserNameFromAPI(userID["User_ID"]);
+      this.getUserName(userID["User_ID"]);
       usrCtxt = new UserLoginContext(userJWT, this.state.username, this.state.rerender);
     }
     return usrCtxt;
   }
 
-  async getUserNameFromAPI(userID: string) {
-    let httpCode: number = 0;
-    let fetchedUsername: string = "";
-    await fetch(backendURL + "/user/getUser?id=" + userID)
+  async getUserName(userID: string) {
+    await getUserNameFromAPI(userID)
       .then(response => {
-        httpCode = response.status;
-        return response.json();
-      })
-      .then(json => fetchedUsername = json.Name);
-    if (httpCode === 200) {
-      this.setState({ username: fetchedUsername });
-    } else {
-      this.setState({ username: "UltraSecretUser" });
-    }
+        this.setState({ username: response })
+      });
   }
 
   render() {
