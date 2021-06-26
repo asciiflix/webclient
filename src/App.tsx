@@ -45,30 +45,6 @@ export default class App extends React.Component<AppProps, AppState>{
     updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: jwt}}), jwt);
   }
 
-  // getInformation = () => {
-  //   //Check if JWT is expired
-  //   jwtExpManager();
-  //   //To login stuff
-  //   let userJWT: string = localStorage.getItem("jwt") as string;
-  //   let userID: any = jwt_decode(userJWT);
-  //   let usrCtxt: UserLoginContext;
-
-  //   if (userJWT === null || userID === null) {
-  //     usrCtxt = new UserLoginContext("", "", this.state.userContext.rerender);
-  //   } else {
-  //     this.getUserName(userID["User_ID"]);
-  //     usrCtxt = new UserLoginContext(userJWT, this.state.userContext.username, this.state.userContext.rerender);
-  //   }
-  //   return usrCtxt;
-  // }
-
-  // async getUserName(userID: string) {
-  //   await getUserNameFromAPI(userID)
-  //     .then(response => {
-  //       // this.setState({ username: response })
-  //     });
-  // }
-
   render() {
     return (
       <div>
