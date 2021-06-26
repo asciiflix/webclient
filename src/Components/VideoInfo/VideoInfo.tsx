@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import "./VideoInfo.css"
+import { backendURL } from '../../Config';
+import VideoMetaDataModel from "../../Models/VideoMetadataModel";
+import UserMetaDataModel from "../../Models/UserMetaDataModel";
+
+
 
 interface VideoInfoState {
-    title: string
-    views: string
-    date: string
+    videoMetaData: VideoMetaDataModel | null,
+    userMetaData: UserMetaDataModel | null,
 }
 
 interface VideoInfoProps {
@@ -14,17 +18,71 @@ interface VideoInfoProps {
 export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState> {
     constructor(props: VideoInfoProps) {
         super(props);
-        this.state ={
-            title: "Gehlen geht zur CIA",
-            views: "0",
-            date: "Dec 10, 2017"
+        this.state = {
+            videoMetaData: null,
+            userMetaData: null,
         };
     }
+    componentDidMount = () => {
+        this.fetchDataFromApi();
+    }
+    async fetchDataFromApi() {
+        let httpCode: number = 0;
+        let videoDataFetched: VideoMetaDataModel | null = null;
+        await fetch(backendURL + '/video/getVideo?id=' + this.props.videoId)
+            .then((response: Response) => {
+                httpCode = response.status;
+                return response.json();
+            })
+            .then((json) => {
+                videoDataFetched = json as VideoMetaDataModel;
+            })
+            .catch(e => {
+                videoDataFetched = null;
+            });
+        if (httpCode === 200) {
+            this.setState({
+                videoMetaData: videoDataFetched,
+            });
+            let userDataFetched: UserMetaDataModel | null = null;
+            await fetch(backendURL + '/user/getUser?id=' + this.state.videoMetaData?.UserID)
+                .then((response: Response) => {
+                    httpCode = response.status;
+                    return response.json();
+                })
+                .then((json) => {
+                    userDataFetched = json as UserMetaDataModel;
+                })
+                .catch(e => {
+                    userDataFetched = null;
+                });
+            if (httpCode === 200) {
+                this.setState({
+                    userMetaData: userDataFetched,
+                })
+            }
+        }
+    }
+
     render() {
+        if (this.state.videoMetaData === null) {
+            return <p>Could not get video data.</p>
+        } else if (this.state.userMetaData === null) {
+            return <p>Could not get user data</p>
+        }
         return (
             <div className="video-info-container">
-                <h1 className="video-info-title">{this.state.title}</h1>
-                <p className="video-info-data">{this.state.views} views - {this.state.date}</p>
+                <h1 className="video-info-title">{this.state.videoMetaData.Title}</h1>
+                <div className="video-metadata-container">
+                    <p className="video-metadata-info">{this.state.videoMetaData.Views} views - {new Date(this.state.videoMetaData.UploadDate).toDateString()}</p>
+                    <p className="video-metadata-like">{this.state.videoMetaData.Likes} likes</p>
+                </div>
+                <hr />
+                <div className="video-description-container">
+                    <p className="video-description-author">by {this.state.userMetaData.Name} </p>
+                    <p className="video-description-data">{this.state.videoMetaData.Description}</p>
+                </div>
+                <hr />
             </div>
         )
     }

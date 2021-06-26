@@ -1,8 +1,8 @@
 export default interface VideoMetaDataModel {
     UUID: string
     Title: string
-    Desciption: string
-    UploadData: string
+    Description: string
+    UploadDate: string
     Views: number
     Likes: number
     UserID: number
