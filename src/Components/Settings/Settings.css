@@ -24,6 +24,17 @@
     color: green;
 }
 
+.delete-button {
+    font-family: 'IBM Plex Mono', monospace;
+    float: right;
+    margin-top: 1%;
+    border-style: solid;
+    border-radius: 4px;
+    padding: 3px 7px;
+    background-color: rgb(255, 107, 107);
+    border-color: red;
+}
+
 @media screen and (min-width: 780px) {
     .settings-grid{
         display: grid;

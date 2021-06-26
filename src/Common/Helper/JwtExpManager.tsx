@@ -7,7 +7,9 @@ export default function jwtExpManager(){
         let dateNow = new Date()
 
         //Remove JWT-Token if expired
-        if (jwtDecoded["exp"] < dateNow.getTime()){
+        if (jwtDecoded["exp"] > dateNow.getTime()){
+            console.log(jwtDecoded["exp"]);
+            console.log(dateNow.getTime);
             localStorage.removeItem("jwt");
         }
     }
