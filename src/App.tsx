@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import checkForJwtExpiration from './Common/Helper/JwtExpManager';
-import { getJwtTokenFromStorage, getUsernameFromStorage, JwtConext, JwtUserInfo, saveJwtToken, updateUsername as updateUsernameAndJwt } from './Common/JwtContext/JwtContext';
+import { getJwtTokenFromStorage, getUsernameFromStorage, JwtConext, JwtUserInfo, updateUsername as updateUsernameAndJwt } from './Common/JwtContext/JwtContext';
 import TitleBar from './Common/TitleBar/TitleBar';
 import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
@@ -36,7 +36,6 @@ export default class App extends React.Component<AppProps, AppState>{
         jwtToken: jwtToken,
       },
       changeJwt: (newJwtToken: string) => {
-        saveJwtToken(newJwtToken);
         updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: newJwtToken}}), newJwtToken);
       }
     };

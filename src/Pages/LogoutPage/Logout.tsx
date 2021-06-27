@@ -1,15 +1,15 @@
 import { Component } from "react";
-import { JwtConext } from "../../Common/JwtContext/JwtContext";
+import { clearJwtToken, clearUnameToken, JwtConext } from "../../Common/JwtContext/JwtContext";
 import "./LogoutPage.css"
 
 export default class Logout extends Component {
 
     setParentContextState: Function = () => {};
 
-    logout = (updateForRemoval: Function) => {
-        this.setParentContextState = updateForRemoval
+    logout = () => {
         if (localStorage.getItem('jwt') !== null) {
-            localStorage.removeItem("jwt");
+            clearUnameToken();
+            clearJwtToken();
         }
         return <h1 className="logout-message">You have been successfully logged out...</h1>
     }
@@ -21,9 +21,10 @@ export default class Logout extends Component {
     render() {
         return (
             <JwtConext.Consumer>
-                {({jwtUserInfo, changeJwt}) => 
-                    this.logout(changeJwt)
-                }
+                {({jwtUserInfo, changeJwt}) => {
+                    this.setParentContextState = changeJwt;
+                    return this.logout()
+                }}
             </JwtConext.Consumer>
         )
     }

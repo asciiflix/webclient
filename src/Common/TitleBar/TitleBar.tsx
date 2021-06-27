@@ -13,11 +13,11 @@ export default class TitleBar extends Component {
             <div className="title-bar-content-box">
                 <Link to="/" className="title-bar-title">Asciiflix</Link>
                     <JwtConext.Consumer>
-                        {({jwtUserInfo}) => 
-                            <div className="title-bar-links">
+                        {({jwtUserInfo}) => {
+                            return <div className="title-bar-links">
                                 <Link to="/" className="title-bar-page-link"><p className="title-bar-page">Search</p><img className="title-bar-icon" src={searchIcon} alt="Search Icon"/> </Link>
                                 <TitleBarMenu username={jwtUserInfo.username}></TitleBarMenu>
-                            </div>}
+                            </div>}}
                     </JwtConext.Consumer>
                 </div>
             </nav>

@@ -40,9 +40,19 @@ export async function updateUsername(updateComponent: Function, jwt: string) {
     let jwtDecoded: JwtStored = jwt_decode(jwt);
     if (jwtDecoded.User_ID !== "") {
         let username: string | null = await getUserNameFromAPI(jwt_decode(jwt).User_ID);
-        if (username !== null)
+        if (username !== null){
+            saveJwtToken(jwt);
+            saveUsername(username);
             updateComponent(username);
+        }
+    } else if (jwt === "") {
+        // for logout
+        updateComponent("");
     }
+}
+
+export function clearUnameToken() {
+    localStorage.removeItem('uname');
 }
 
 export const JwtConext = React.createContext<JwtUserContext>({jwtUserInfo: {username: "", jwtToken: ""}, changeJwt: (newJwt: string) => {}});

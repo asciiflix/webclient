@@ -36,9 +36,9 @@ export default class UserLogin extends Component<UserLoginStatusProps, UserLogin
         };
     }
 
-    submit_login = (e: SyntheticEvent) => {
+    submit_login = async (e: SyntheticEvent) => {
         e.preventDefault();
-        this.loginCallApi();
+        await this.loginCallApi();
     }
 
     async loginCallApi() {
