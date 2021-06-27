@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import checkForJwtExpiration from './Common/Helper/JwtExpManager';
-import { getJwtTokenFromStorage, JwtConext, JwtUserInfo, saveJwtToken, updateUsername as updateUsernameAndJwt } from './Common/JwtContext/JwtContext';
+import { getJwtTokenFromStorage, getUsernameFromStorage, JwtConext, JwtUserInfo, saveJwtToken, updateUsername as updateUsernameAndJwt } from './Common/JwtContext/JwtContext';
 import TitleBar from './Common/TitleBar/TitleBar';
 import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
@@ -26,15 +26,18 @@ export default class App extends React.Component<AppProps, AppState>{
 
   constructor(props: AppProps) {
     super(props);
+    let jwtToken: string = getJwtTokenFromStorage();
+    let username: string = getUsernameFromStorage();
+    username = username === null? '': username;
+    jwtToken = jwtToken === null? '': jwtToken;
     this.state = {
       jwtUserInfo: {
-        username: "",
-        jwtToken: "",
+        username: username,
+        jwtToken: jwtToken,
       },
       changeJwt: (newJwtToken: string) => {
-        updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: newJwtToken}}), newJwtToken);
         saveJwtToken(newJwtToken);
-        this.setState(({jwtUserInfo}) => ({jwtUserInfo: {username: "", jwtToken: newJwtToken}}));
+        updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: newJwtToken}}), newJwtToken);
       }
     };
     checkForJwtExpiration();

@@ -20,6 +20,14 @@ export function clearJwtToken() {
     localStorage.removeItem('jwt');
 }
 
+export function saveUsername(username: string) {
+    localStorage.setItem('uname', username)
+}
+
+export function getUsernameFromStorage(): string {
+    return localStorage.getItem('uname') as string
+}
+
 export function getJwtTokenFromStorage(): string {
     let jwtToken = localStorage.getItem('jwt') as string;
     if (jwtToken === null){
