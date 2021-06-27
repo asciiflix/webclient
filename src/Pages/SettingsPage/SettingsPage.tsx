@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { JwtConext } from "../../Common/JwtContext/JwtContext";
 import Settings from "../../Components/Settings/Settings";
 import { EMPTY_USER_CONTEXT, UserContext } from "../../UserContext";
 
@@ -18,10 +19,11 @@ export default class SettingsPage extends Component {
 
     render() {
         return (
-            <div className="settings-page-container">
-                {this.getUserState() ? <Redirect to="/"></Redirect> : <br></br>}
-                <Settings></Settings>
-            </div>
+            <JwtConext.Consumer>
+                {({jwtUserInfo, changeJwt}) => 
+                    jwtUserInfo.jwtToken === ""?<Redirect to="/"/> : <Settings jwtUserInfo={jwtUserInfo} changeJwt={changeJwt}/>
+                }
+            </JwtConext.Consumer>
         )
     }
 }

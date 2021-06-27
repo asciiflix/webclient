@@ -1,6 +1,7 @@
 import { Component, SyntheticEvent } from "react";
 import { Redirect } from "react-router-dom";
 import jwt_decode from "../../Common/Helper/JwtDecoder";
+import { JwtUserInfo } from "../../Common/JwtContext/JwtContext";
 import { backendURL } from "../../Config";
 import UserModelPrivate from "../../Models/UserModelPrivate";
 import { UserContext } from "../../UserContext";
@@ -19,7 +20,8 @@ interface AccountSecrets {
 }
 
 interface StatusProps {
-
+    jwtUserInfo: JwtUserInfo
+    changeJwt: Function
 }
 
 interface StatusState {
@@ -34,8 +36,6 @@ interface StatusState {
 
 
 export default class Settings extends Component<StatusProps, StatusState> {
-    static contextType = UserContext;
-
     constructor(props: StatusProps) {
         super(props);
         this.state = {
@@ -63,10 +63,10 @@ export default class Settings extends Component<StatusProps, StatusState> {
     async getPrivateUserInformation() {
         let httpCode: number = 0;
         let userData: UserModelPrivate = {};
-        let userID: string = jwt_decode(this.context.jwtToken).User_ID;
+        let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken).User_ID;
         await fetch(backendURL + "/secure/user/getUser?id=" + userID, {
             method: "GET",
-            headers: { "Token": this.context.jwtToken }
+            headers: { "Token": this.props.jwtUserInfo.jwtToken }
         })
             .then(response => {
                 httpCode = response.status;
@@ -84,10 +84,10 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     async changeAccountInformation() {
         let httpCode: number = 0;
-        let userID: string = jwt_decode(this.context.jwtToken).User_ID;
+        let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken).User_ID;
         await fetch(backendURL + "/secure/user/updateUser?id=" + userID, {
             method: "PUT",
-            headers: { "Token": this.context.jwtToken, "Content-Type": "application/json" },
+            headers: { "Token": this.props.jwtUserInfo.jwtToken, "Content-Type": "application/json" },
             body: JSON.stringify({
                 "Name": this.accountInformation.username,
                 "EMail": this.accountInformation.email
@@ -113,10 +113,10 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     async changePassword() {
         let httpCode: number = 0;
-        let userID: string = jwt_decode(this.context.jwtToken).User_ID;
+        let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken).User_ID;
         await fetch(backendURL + "/secure/user/updateUser?id=" + userID, {
             method: "PUT",
-            headers: { "Token": this.context.jwtToken, "Content-Type": "application/json" },
+            headers: { "Token": this.props.jwtUserInfo.jwtToken, "Content-Type": "application/json" },
             body: JSON.stringify({
                 "Password": this.accountSecret.newPWRepeat
             })
@@ -133,7 +133,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     async checkCurrentPassword() {
         let httpCode: number = 0;
-        let email: string = jwt_decode(this.context.jwtToken)["User_email"];
+        let email: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_email"];
         await fetch(backendURL + "/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -160,10 +160,10 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     async deleteAccount() {
         let httpCode: number = 0;
-        let userID: string = jwt_decode(this.context.jwtToken)["User_ID"];
+        let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"];
         await fetch(backendURL + "/secure/user/deleteUser?id=" + userID, {
             method: "DELETE",
-            headers: { "Token": this.context.jwtToken }
+            headers: { "Token": this.props.jwtUserInfo.jwtToken }
         })
             .then(response => {
                 httpCode = response.status;
@@ -191,13 +191,13 @@ export default class Settings extends Component<StatusProps, StatusState> {
         this.deleteAccount();
     }
 
-    finalizeNameChange = (jwtSetter: Function, usernameSetter: Function, rerender: Function) => {
-        rerender(this.context.jwtToken, this.accountInformation.username);
+    finalizeNameChange = () => {
+        this.props.changeJwt(this.props.jwtUserInfo.jwtToken);
         return <Redirect to="/"></Redirect>;
     }
 
     componentDidMount() {
-        if (this.context.jwtToken !== "") {
+        if (this.props.jwtUserInfo.jwtToken !== "") {
             this.getPrivateUserInformation();
         }
     }
@@ -216,7 +216,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
                         {this.state.NameChanged ?
                             <UserContext.Consumer>
                                 {({ jwtToken, username, setUsername, setJwtToken, rerender }) => (
-                                    this.state.NameChanged ? this.finalizeNameChange(setJwtToken, setUsername, rerender) : <></>)}
+                                    this.state.NameChanged ? this.finalizeNameChange() : <></>)}
                             </UserContext.Consumer> : <></>}
 
                         {this.state.MailChanged ? <Redirect to="/logout"></Redirect> : <></>}
