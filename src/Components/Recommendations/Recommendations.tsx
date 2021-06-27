@@ -1,8 +1,8 @@
 import { Component } from "react";
+import { JwtConext } from "../../Common/JwtContext/JwtContext";
 import VideoPreview from "../../Common/VideoPreview/VideoPreview";
 import { backendURL } from "../../Config";
 import VideoMetaDataModel from "../../Models/VideoMetadataModel";
-import { UserContext } from "../../UserContext";
 import "./Recommendations.css";
 
 
@@ -12,17 +12,19 @@ interface RecommendationsProps {
 
 interface RecommendationsState {
     videos: VideoMetaDataModel[]
+    hasPrivateVideos: boolean
     limit: number
 }
 
 export default class Recommendations extends Component<RecommendationsProps, RecommendationsState>{
-    static contextType = UserContext;
+    jwtToken: string = ""
 
     constructor(props: RecommendationsProps) {
         super(props);
         this.state = {
             videos: [],
-            limit: props.limit
+            limit: props.limit,
+            hasPrivateVideos: false
         };
     }
 
@@ -53,7 +55,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         await fetch(backendURL + "/secure/video/getUserRecomendations?limit=" + this.state.limit, {
             method: "GET",
             headers: {
-                "Token": this.context.jwtToken
+                "Token": this.jwtToken
             }
         })
             .then((response: Response) => {
@@ -74,18 +76,30 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
     }
 
     componentDidMount = () => {
-        if (this.context.jwtToken === "") {
+        if (this.jwtToken === "") {
             this.fetchVideoDataPublic();
         } else {
             this.fetchVideoDataPrivate();
         }
     }
 
+    componentDidUpdate() {
+        if (!this.state.hasPrivateVideos && this.jwtToken !== ""){
+            this.fetchVideoDataPrivate();
+            this.setState({hasPrivateVideos: true});
+        }
+    }
+
     render() {
-        return (   
-            <div className="recommendations-container">
-                {this.state.videos.map((video, index) => <VideoPreview key={index} title={video.Title} creator_id={video.UserID} uuid={video.UUID}></VideoPreview>)}
-            </div>
+        return (
+            <JwtConext.Consumer>
+                {({jwtUserInfo, changeJwt}) => {
+                    console.log(this.jwtToken);
+                    return <div className="recommendations-container">
+                        {this.state.videos.map((video, index) => <VideoPreview key={index} title={video.Title} creator_id={video.UserID} uuid={video.UUID}></VideoPreview>)}
+                    </div>
+                }}
+            </JwtConext.Consumer>   
         )
     }
 }
