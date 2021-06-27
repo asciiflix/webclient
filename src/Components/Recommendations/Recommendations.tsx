@@ -50,6 +50,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
     }
 
     async fetchVideoDataPrivate() {
+        console.log("private stuff");
         let httpCode: number = 0;
         let fetchedVideoData: VideoMetaDataModel[] = [];
         await fetch(backendURL + "/secure/video/getUserRecomendations?limit=" + this.state.limit, {
@@ -94,7 +95,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         return (
             <JwtConext.Consumer>
                 {({jwtUserInfo, changeJwt}) => {
-                    console.log(this.jwtToken);
+                    this.jwtToken = jwtUserInfo.jwtToken;
                     return <div className="recommendations-container">
                         {this.state.videos.map((video, index) => <VideoPreview key={index} title={video.Title} creator_id={video.UserID} uuid={video.UUID}></VideoPreview>)}
                     </div>
