@@ -8,6 +8,7 @@
     display: grid;
     padding: 3em;
     padding-bottom: 5em;
+    padding-top: 1em;
 }
 
 .upload-grid{
@@ -53,6 +54,14 @@
     border-radius: 10px;
     margin-bottom: 8%;
     margin-top: 5px;
+}
+
+
+@media screen and (max-width: 1300px) {
+    .upload-form-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
 @media screen and (min-width: 780px) {
