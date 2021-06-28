@@ -15,7 +15,7 @@ export default class TitleBar extends Component {
                     <JwtConext.Consumer>
                         {({jwtUserInfo}) => {
                             return <div className="title-bar-links">
-                                <Link to="/" className="title-bar-page-link"><p className="title-bar-page">Search</p><img className="title-bar-icon" src={searchIcon} alt="Search Icon"/> </Link>
+                                <Link to="/search" className="title-bar-page-link"><p className="title-bar-page">Search</p><img className="title-bar-icon" src={searchIcon} alt="Search Icon"/> </Link>
                                 <TitleBarMenu username={jwtUserInfo.username}></TitleBarMenu>
                             </div>}}
                     </JwtConext.Consumer>
