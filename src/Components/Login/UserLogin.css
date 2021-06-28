@@ -3,8 +3,8 @@
   /* TODO Make this dynamic */
   border-radius: 7px;
   margin: 0 auto;
-  max-width: fit-content;
   display: grid;
+  width: fit-content;
   padding: 3em;
   padding-bottom: 5em;
 }
@@ -20,7 +20,7 @@
 }
 
 .empty-div{
-    width: 250px;
+    max-width: 400px;
     margin: 0 auto;
 }
 
@@ -42,10 +42,6 @@
 .login-form-failed-login {
     color: red;
 }
-
-.form-label-text {
-}
-
 
 .form-title-text {
     font-weight: 400;

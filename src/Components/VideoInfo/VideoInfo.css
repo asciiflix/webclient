@@ -1,10 +1,23 @@
 .video-info-container {
-    grid-row-start: 2;
-    grid-column-start: 1;
+  grid-row-start: 2;
+  grid-column-start: 1;
+}
+
+.video-info-container > hr {
+  height: 1px;
+  border: 0;
+  background-color: lightgrey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.video-metadata-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 1300px) {
-    .video-info-title {
-        font-size: 24px;
-    }
+  .video-info-title {
+    font-size: 24px;
+  }
 }
