@@ -1,6 +1,11 @@
 import { Component, SyntheticEvent } from "react";
+import { JwtUserInfo } from "../../Common/JwtContext/JwtContext";
 import { backendURL } from "../../Config";
-import { UserContext } from "../../UserContext";
+import "../Login/UserLogin.css";
+import "../Settings/Settings.css";
+import "./UploadGIF.css";
+import uploadSVG from "./upload_icon.svg";
+
 
 interface UploadForm {
     title: string,
@@ -10,17 +15,18 @@ interface UploadForm {
 
 interface UploadState {
     uploaded: boolean
+    uploadedFile: boolean
     failed: boolean
     videoURL: string
+    videoName: string
 }
 
 interface UploadProps {
-
+    jwtUserInfo: JwtUserInfo
+    changeJwt: Function
 }
 
 export default class UploadGIF extends Component<UploadProps, UploadState> {
-    static contextType = UserContext;
-
     uploadData: UploadForm = {
         title: "",
         description: "",
@@ -29,10 +35,19 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
 
     constructor(props: UploadProps) {
         super(props);
-        this.setState({
+        this.state = {
             uploaded: false,
-            failed: false
-        });
+            failed: false,
+            uploadedFile: false,
+            videoURL: "",
+            videoName: ""
+        };
+    }
+
+    handleImage(e: React.ChangeEvent<HTMLInputElement>) {
+        this.uploadData.gif = e.target.files;
+        this.setState({ videoName: this.uploadData.gif?.[0].name as string })
+        this.setState({ uploadedFile: true });
     }
 
     submit_upload = (e: SyntheticEvent) => {
@@ -53,14 +68,14 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
         let response_msg: string = "";
         await fetch(backendURL + "/secure/video/uploadGif", {
             method: "POST",
-            headers: { "Token": this.context.jwtToken },
+            headers: { "Token": this.props.jwtUserInfo.jwtToken },
             body: formData
         })
             .then(response => {
                 httpCode = response.status;
                 return response.json();
             })
-            .then(json => response_msg = json);
+            .then(json => response_msg = json.videoID);
         if (httpCode === 201) {
             this.setState(
                 { uploaded: true, videoURL: "/watch/" + response_msg });
@@ -73,22 +88,31 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
 
     render() {
         return (
-            <div className="container-upload-gif">
-                <h1>GIF-Uploader</h1>
-                <form onSubmit={this.submit_upload}>
-                    <label>Title</label>
-                    <input type="name" placeholder="Title" required onChange={e => this.uploadData.title = e.target.value}></input>
+            <div className="upload-form-container">
+                <div className="empty-div-settings">
+                    <h1 className="form-title-text">Upload</h1>
+                    {this.state.uploaded ? <div className="form-settings-successfully"> <p>Video Successfully Uploaded! Here is the <a className="link-text" href={this.state.videoURL}>Link</a></p></div> : <></>}
+                    {this.state.failed ? <p className="login-form-failed-login">Upload Failed!</p> : <></>}
 
-                    <label>Description</label>
-                    <input type="name" placeholder="Description" required onChange={e => this.uploadData.description = e.target.value}></input>
+                    <div className="upload-file">
+                        <label htmlFor="file">
+                            {this.state.uploadedFile ? <h2 className="upload-text">{this.state.videoName}</h2> : <img className="upload-button" src={uploadSVG} alt="upload-icon"></img>}
+                        </label>
+                        <input id="file" type="file" accept="image/gif" required onChange={e => this.handleImage(e)}></input>
+                    </div>
 
-                    <label>GIF-File</label>
-                    <input type="file" required onChange={e => this.uploadData.gif = e.target.files}></input>
+                    <h2 className="form-title-text">Meta Information</h2>
+                    <form className="upload-grid" onSubmit={this.submit_upload}>
+                        <label className="form-label-text">Title:</label>
+                        <input className="form-input" type="name" placeholder="My First Video on Asciiflix :)" required onChange={e => this.uploadData.title = e.target.value}></input>
 
-                    <button>Upload</button>
-                </form>
+                        <label className="form-label-text">Description:</label>
+                        <textarea className="upload-input-desc" placeholder="A very nice ascii-gif...." rows={10} required onChange={e => this.uploadData.description = e.target.value}></textarea>
+
+                        <button>Upload</button>
+                    </form>
+                </div>
             </div>
         )
     }
-
 }
