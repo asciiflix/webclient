@@ -10,6 +10,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import Logout from './Pages/LogoutPage/Logout';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
+import UploadPage from './Pages/UploadPage/UploadPage';
 import VideoPage from './Pages/VideoPage/VideoPage';
 
 
@@ -55,6 +56,7 @@ export default class App extends React.Component<AppProps, AppState>{
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
+                <Route path="/upload" component={UploadPage} />
                 <Route path="/settings" component={SettingsPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
