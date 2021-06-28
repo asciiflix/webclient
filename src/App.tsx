@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import jwt_decode from './Common/Helper/JwtDecoder';
-import jwtExpManager from './Common/Helper/JwtExpManager';
-import { getUserNameFromAPI } from './Common/Helper/UsernameApi';
+import checkForJwtExpiration from './Common/Helper/JwtExpManager';
+import { getJwtTokenFromStorage, getUsernameFromStorage, JwtConext, JwtUserInfo, updateUsername as updateUsernameAndJwt } from './Common/JwtContext/JwtContext';
 import TitleBar from './Common/TitleBar/TitleBar';
 import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
@@ -12,60 +11,47 @@ import RegisterPage from './Pages/LoginPage/RegisterPage';
 import Logout from './Pages/LogoutPage/Logout';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import VideoPage from './Pages/VideoPage/VideoPage';
-import UserLoginContext, { UserContext } from './UserContext';
 
 
 interface AppProps {
 
 }
 
-export default class App extends React.Component<AppProps, UserLoginContext>{
+interface AppState {
+  jwtUserInfo: JwtUserInfo
+  changeJwt: Function
+}
+
+export default class App extends React.Component<AppProps, AppState>{
 
   constructor(props: AppProps) {
     super(props);
-    this.state = new UserLoginContext("", "", (jwtToken: string, username: string) => {
-      this.setState({
+    let jwtToken: string = getJwtTokenFromStorage();
+    let username: string = getUsernameFromStorage();
+    username = username === null? '': username;
+    jwtToken = jwtToken === null? '': jwtToken;
+    this.state = {
+      jwtUserInfo: {
+        username: username,
         jwtToken: jwtToken,
-        username: username
-      })
-    });
-
-    this.getInformation();
+      },
+      changeJwt: (newJwtToken: string) => {
+        updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: newJwtToken}}), newJwtToken);
+      }
+    };
+    checkForJwtExpiration();
   }
   componentDidMount() {
-    this.setState(this.getInformation());
-  }
-
-  getInformation = () => {
-    //Check if JWT is expired
-    jwtExpManager();
-    //To login stuff
-    let userJWT: string = localStorage.getItem("jwt") as string;
-    let userID: any = jwt_decode(userJWT);
-    let usrCtxt: UserLoginContext;
-
-    if (userJWT === null || userID === null) {
-      usrCtxt = new UserLoginContext("", "", this.state.rerender);
-    } else {
-      this.getUserName(userID["User_ID"]);
-      usrCtxt = new UserLoginContext(userJWT, this.state.username, this.state.rerender);
-    }
-    return usrCtxt;
-  }
-
-  async getUserName(userID: string) {
-    await getUserNameFromAPI(userID)
-      .then(response => {
-        this.setState({ username: response })
-      });
+    let jwt: string = getJwtTokenFromStorage();
+    updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: jwt}}), jwt);
   }
 
   render() {
     return (
       <div>
         <Router>
-          <UserContext.Provider value={this.state}>
-            <TitleBar username={this.state.username} />
+          <JwtConext.Provider value={{jwtUserInfo: this.state.jwtUserInfo, changeJwt: this.state.changeJwt}}>
+            <TitleBar/>
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
@@ -76,7 +62,7 @@ export default class App extends React.Component<AppProps, UserLoginContext>{
                 <Route path="/" component={HomePage} />
               </Switch>
             </div>
-          </UserContext.Provider>
+          </JwtConext.Provider>
         </Router>
       </div>
     )

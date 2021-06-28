@@ -3,6 +3,7 @@
     /* TODO Make this dynamic */
     border-radius: 7px;
     margin: 0 auto;
+    margin-top: 2em;
     width: auto;
     display: grid;
     padding: 3em;
