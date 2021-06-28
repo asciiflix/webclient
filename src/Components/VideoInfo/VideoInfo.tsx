@@ -4,7 +4,8 @@ import { backendURL } from '../../Config';
 import VideoMetaDataModel from "../../Models/VideoMetadataModel";
 import UserMetaDataModel from "../../Models/UserMetaDataModel";
 import { JwtUserInfo } from '../../Common/JwtContext/JwtContext';
-import LikeIcon from "./like_icon_liked.svg";
+import LikeIconLiked from "./like_icon_liked.svg";
+import LikeIconNormal from "./like_icon_normal.svg";
 import jwt_decode from '../../Common/Helper/JwtDecoder';
 import UserModelPrivate from '../../Models/UserModelPrivate';
 
@@ -116,7 +117,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
     async removeLike() {
         let httpCode: number = 0;
         await fetch(backendURL + "/secure/video/deleteLike?id=" + this.state.videoMetaData?.UUID, {
-            method: "POST",
+            method: "DELETE",
             headers: { "Token": this.props.jwtUserInfo.jwtToken }
         })
             .then(response => {
@@ -129,7 +130,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
-    handleLike() {
+    handleLike = () => {
         if (this.props.jwtUserInfo.jwtToken !== "") {
             if (this.state.liked) {
                 this.removeLike();
@@ -153,7 +154,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
                     <p className="video-metadata-like">{this.state.videoMetaData.Likes} likes </p>
                     {this.props.jwtUserInfo.jwtToken !== "" ?
                         <button className="like-icon" onClick={this.handleLike}>
-                            <img src={LikeIcon} alt="Like"></img>
+                            {this.state.liked ? <img src={LikeIconLiked} alt="Like"></img> : <img src={LikeIconNormal} alt="Like"></img>}
                         </button>
                         : <></>}
 
