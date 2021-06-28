@@ -6,4 +6,5 @@ export default interface VideoMetaDataModel {
     Views: number
     Likes: number
     UserID: number
+    Creator: string
 }

@@ -1,96 +1,70 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import checkForJwtExpiration from './Common/Helper/JwtExpManager';
+import { getJwtTokenFromStorage, getUsernameFromStorage, JwtConext, JwtUserInfo, updateUsername as updateUsernameAndJwt } from './Common/JwtContext/JwtContext';
 import TitleBar from './Common/TitleBar/TitleBar';
+import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
 import LoginPage from './Pages/LoginPage/LoginPage';
-import "./App.css"
-import "./Global.css"
-import VideoPage from './Pages/VideoPage/VideoPage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
-import UserLoginContext, { UserContext } from './UserContext';
 import Logout from './Pages/LogoutPage/Logout';
-import { backendURL } from './Config';
+import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import UploadPage from './Pages/UploadPage/UploadPage';
+import VideoPage from './Pages/VideoPage/VideoPage';
 
 
 interface AppProps {
 
 }
 
-export default class App extends React.Component<AppProps, UserLoginContext>{
+interface AppState {
+  jwtUserInfo: JwtUserInfo
+  changeJwt: Function
+}
+
+export default class App extends React.Component<AppProps, AppState>{
 
   constructor(props: AppProps) {
     super(props);
-    this.state = new UserLoginContext("", "", (jwtToken: string, username: string) => {
-      this.setState({
+    let jwtToken: string = getJwtTokenFromStorage();
+    let username: string = getUsernameFromStorage();
+    username = username === null? '': username;
+    jwtToken = jwtToken === null? '': jwtToken;
+    this.state = {
+      jwtUserInfo: {
+        username: username,
         jwtToken: jwtToken,
-        username: username
-      })
-    });
-
-    this.getInformation();
+      },
+      changeJwt: (newJwtToken: string) => {
+        updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: newJwtToken}}), newJwtToken);
+      }
+    };
+    checkForJwtExpiration();
   }
   componentDidMount() {
-    this.setState(this.getInformation());
-  }
-
-  jwt_decode = (input: string) => {
-    if (input !== null) {
-      var parts = input.split('.'); // header, payload, signature
-      return JSON.parse(atob(parts[1]));
-    } else {
-      return null
-    }
-  }
-
-  getInformation = () => {
-    let userJWT: string = localStorage.getItem("jwt") as string;
-    let userID: any = this.jwt_decode(userJWT);
-    let usrCtxt: UserLoginContext;
-
-    if (userJWT === null || userID === null) {
-      usrCtxt = new UserLoginContext("", "", this.state.rerender);
-    } else {
-      this.getUserNameFromAPI(userID["User_ID"]);
-      usrCtxt = new UserLoginContext(userJWT, this.state.username, this.state.rerender);
-    }
-    return usrCtxt;
-  }
-
-  async getUserNameFromAPI(userID: string) {
-    let httpCode: number = 0;
-    let fetchedUsername: string = "";
-    await fetch(backendURL + "/user/getUser?id=" + userID)
-      .then(response => {
-        httpCode = response.status;
-        return response.json();
-      })
-      .then(json => fetchedUsername = json.Name);
-    if (httpCode === 200) {
-      this.setState({ username: fetchedUsername });
-    } else {
-      this.setState({ username: "UltraSecretUser" });
-    }
+    let jwt: string = getJwtTokenFromStorage();
+    updateUsernameAndJwt((uname:string) => this.setState({jwtUserInfo: {username: uname, jwtToken: jwt}}), jwt);
   }
 
   render() {
     return (
       <div>
         <Router>
-          <UserContext.Provider value={this.state}>
-            <TitleBar username={this.state.username} />
+          <JwtConext.Provider value={{jwtUserInfo: this.state.jwtUserInfo, changeJwt: this.state.changeJwt}}>
+            <TitleBar/>
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
                 <Route path="/upload" component={UploadPage} />
+                <Route path="/settings" component={SettingsPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />
                 <Route path="/" component={HomePage} />
               </Switch>
             </div>
-          </UserContext.Provider>
+          </JwtConext.Provider>
         </Router>
       </div>
     )
