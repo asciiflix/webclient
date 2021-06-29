@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom'
 import tabIcon from "./tabs.svg"
 import "../TitleBar/TitleBar.css";
 import "./TitleBarMenu.css"
+import { JwtUserInfo } from '../JwtContext/JwtContext';
+import jwt_decode from '../Helper/JwtDecoder';
 
 interface TitleBarMenuProps {
     username: string
+    jwtUserInfo: JwtUserInfo
 }
 
 interface TitleBarMenuState {
     showMenu: boolean
+    userID: string
 }
 
 export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarMenuState> {
@@ -17,7 +21,8 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     constructor(props: TitleBarMenuProps) {
         super(props);
         this.state = {
-            showMenu: false
+            showMenu: false,
+            userID: ""
         };
     }
     
@@ -33,6 +38,18 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
         });
     }
 
+    componentDidMount = () => {
+        this.getUserURL();
+    }
+
+    getUserURL = () => {
+        if (this.props.jwtUserInfo.jwtToken !== ""){
+            let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"];
+            this.setState({userID: userID});
+        }
+    }
+
+
     renderMenu = () => {
         return (
             <div className="title-bar-menu-action-container">
@@ -40,8 +57,8 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
                 <div className="title-bar-menu-container">
                     <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.username}</p>
                     <Link onClick={this.removeMenu} to="/settings" className="title-bar-menu-sub-link">Settings</Link>
-                    <Link onClick={this.removeMenu} to="/" className="title-bar-menu-sub-link">Upload</Link>
-                    <Link onClick={this.removeMenu} to="/" className="title-bar-menu-sub-link">Profile</Link>
+                    <Link onClick={this.removeMenu} to="/upload" className="title-bar-menu-sub-link">Upload</Link>
+                    <Link onClick={this.removeMenu} to={"/user/" + this.state.userID}  className="title-bar-menu-sub-link">Profile</Link>
                     <Link onClick={this.removeMenu} to="/logout" className="title-bar-menu-sub-link">Logout</Link>
                 </div>
             </div>
