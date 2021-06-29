@@ -58,9 +58,16 @@ export default class VideoPage extends Component<UserProfilePageProps, UserProfi
         }
         return (
             <div className="user-page-container">
-                <h1 className="user-info-title">{this.state.userMetaData.Name}</h1>
-                <div className="user-video-container">
-                    {this.state.userMetaData.Videos.map((video, index) => <VideoPreview title={video.Title} uuid={video.UUID}></VideoPreview>)}
+                <div className="user-name-container">
+                    <h1>{this.state.userMetaData.Name}</h1>
+                </div>
+                <div className="user-metadata-container">
+                    <div className="user-metadata-content">
+                        <p className="user-metadata-description">{this.state.userMetaData.Description}</p>
+                        <div className="user-video-container">
+                            {this.state.userMetaData.Videos.map((video, index) => <VideoPreview title={video.Title} uuid={video.UUID}></VideoPreview>)}
+                        </div>
+                    </div>
                 </div>
             </div>
         )
