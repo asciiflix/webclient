@@ -1,0 +1,86 @@
+.upload-form-container{
+    background-color: white;
+    /* TODO Make this dynamic */
+    border-radius: 7px;
+    margin: 0 auto;
+    margin-top: 2em;
+    width: auto;
+    display: grid;
+    padding: 3em;
+    padding-bottom: 5em;
+    padding-top: 1em;
+}
+
+.upload-grid{
+    display: grid;
+    grid-auto-flow: row;
+}
+
+.upload-file{
+    width: auto;
+    height: 200px;
+    border-radius: 10px;
+    border: 2px black solid;
+}
+
+.upload-file > input{
+    display: none;
+}
+
+.upload-button {
+    display: block;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75px;
+}
+
+.upload-text{
+    margin-top: 3.5em;
+    text-align: center;
+    font-weight: 400;
+}
+
+.link-text {
+    text-decoration: none;
+}
+
+.upload-input-desc{
+    background-color: var(--input-field-color);
+    border-style: solid;
+    min-width: 98%;
+    /* BugFix for limit with size */
+    max-width: 0em;
+    border-radius: 10px;
+    margin-bottom: 8%;
+    margin-top: 5px;
+}
+
+
+@media screen and (max-width: 1300px) {
+    .upload-form-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media screen and (min-width: 780px) {
+    .upload-grid{
+        display: grid;
+        grid-template-columns: [labels] 150px [inputs] 1fr;
+        grid-auto-flow: row;
+    }
+    
+    .upload-grid > label {
+        grid-column: labels;
+    }
+    
+    .upload-grid > input, button {
+        grid-column: inputs;
+        margin-top: -1%;
+    }
+
+    .upload-grid > button {
+        margin-top: -1%;
+    }
+}
