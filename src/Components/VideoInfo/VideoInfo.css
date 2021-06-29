@@ -29,6 +29,11 @@
   background-color: transparent;
 }
 
+.video-author-link {
+  text-decoration: none;
+  color: black;
+}
+
 @media screen and (max-width: 1300px) {
   .video-info-title {
     font-size: 24px;

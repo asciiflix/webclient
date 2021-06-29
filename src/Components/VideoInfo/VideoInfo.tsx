@@ -8,7 +8,7 @@ import LikeIconLiked from "./like_icon_liked.svg";
 import LikeIconNormal from "./like_icon_normal.svg";
 import EditIcon from "./edit_icon.svg";
 import "./VideoInfo.css";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 
 
@@ -189,7 +189,9 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
                 </div>
                 <hr />
                 <div className="video-description-container">
-                    <p className="video-description-author">by {this.state.userMetaData.Name} </p>
+                    <Link to={"/user/" + this.state.userMetaData.UserID} className="video-author-link">
+                        <p className="video-author-link">by {this.state.userMetaData.Name} </p>
+                    </Link>
                     <p className="video-description-data">{this.state.videoMetaData.Description}</p>
                 </div>
                 <hr />
