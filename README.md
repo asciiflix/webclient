@@ -9,8 +9,8 @@ Asciiflix can provide all of these features!
 <!-- TODO: Add Demo Image -->
 
 ## Table of Contents
-- [Contributing](contributing) 
-- [License](license)
+- [Contributing](#contributing) 
+- [License](#license)
 
 
 
