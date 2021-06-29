@@ -3,6 +3,7 @@ import UserPreview from '../../Common/UserPreview/UserPreview';
 import VideoPreview from '../../Common/VideoPreview/VideoPreview';
 import { backendURL } from '../../Config';
 import SearchResultModel from '../../Models/SearchResultModel';
+import "./SearchPage.css"
 
 interface SearchPageProps {
 
@@ -66,13 +67,19 @@ export default class SearchPage extends Component<SearchPageProps, SearchPageSta
     }
     
     render() {
+        console.log(this.state.searchResults)
         return (
-            <div>
+            <div className="search-page-container">
                 <form onSubmit={this.handleSearch}>
-                    <input type="text" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
+                    <input className="search-page-search" type="text" value={this.state.searchQuery} onChange={this.handleSearchChange} placeholder="Search..."/>
                 </form>
-                {this.state.searchResults.Videos.map(video => <VideoPreview key={video.UUID} uuid={video.UUID} title={video.Title} creator_id={video.UserID}/>)}
-                {this.state.searchResults.Users.map(user => <UserPreview key={user.UserID} username={user.Name} description={user.Desciption} userId={user.UserID}/>)}
+
+                {this.state.searchResults.Users.length === 0? <></> : <div className="search-results search-page-users">
+                    {this.state.searchResults.Users.map(user => <UserPreview key={user.UserID} username={user.Name} description={user.Desciption} userId={user.UserID}/>)}
+                </div>}
+                {this.state.searchResults.Videos.length === 0? <></> : <div className="search-results search-page-videos">
+                    {this.state.searchResults.Videos.map(video => <VideoPreview key={video.UUID} uuid={video.UUID} title={video.Title} creator_id={video.UserID}/>)}
+                </div>}
             </div>
         )
     }
