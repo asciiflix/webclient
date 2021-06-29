@@ -75,7 +75,7 @@ export default class SearchPage extends Component<SearchPageProps, SearchPageSta
                 </form>
 
                 {this.state.searchResults.Users.length === 0? <></> : <div className="search-results search-page-users">
-                    {this.state.searchResults.Users.map(user => <UserPreview key={user.UserID} username={user.Name} description={user.Desciption} userId={user.UserID}/>)}
+                    {this.state.searchResults.Users.map(user => <UserPreview key={user.UserID} username={user.Name} description={user.Description} userId={user.UserID}/>)}
                 </div>}
                 {this.state.searchResults.Videos.length === 0? <></> : <div className="search-results search-page-videos">
                     {this.state.searchResults.Videos.map(video => <VideoPreview key={video.UUID} uuid={video.UUID} title={video.Title} creator_id={video.UserID}/>)}

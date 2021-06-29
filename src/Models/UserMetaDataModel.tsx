@@ -1,6 +1,6 @@
 export default interface UserMetaDataModel {
     UserID: string
     Name: string
-    Desciption: string
+    Description: string
     Picture_ID: string
 }
