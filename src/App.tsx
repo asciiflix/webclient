@@ -12,6 +12,7 @@ import "./Global.css"
 import UserProfilePage from './Pages/UserProfilePage/UserProfilePage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import Logout from './Pages/LogoutPage/Logout';
+import SearchPage from './Pages/SearchPage/SearchPage';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import UploadPage from './Pages/UploadPage/UploadPage';
 import VideoPage from './Pages/VideoPage/VideoPage';
@@ -65,6 +66,7 @@ export default class App extends React.Component<AppProps, AppState>{
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />
+                <Route path="/search" component={SearchPage} />
                 <Route path="/" component={HomePage} />
               </Switch>
             </div>
