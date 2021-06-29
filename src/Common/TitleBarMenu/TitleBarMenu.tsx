@@ -7,8 +7,7 @@ import { JwtUserInfo } from '../JwtContext/JwtContext';
 import jwt_decode from '../Helper/JwtDecoder';
 
 interface TitleBarMenuProps {
-    username: string
-    jwtUserInfo: JwtUserInfo
+        jwtUserInfo: JwtUserInfo
 }
 
 interface TitleBarMenuState {
@@ -55,10 +54,10 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
             <div className="title-bar-menu-action-container">
                 <div className="title-bar-menu-cover" onMouseEnter={this.removeMenu} onClick={this.removeMenu}></div>
                 <div className="title-bar-menu-container">
-                    <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.username}</p>
+                    <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.jwtUserInfo.username}</p>
                     <Link onClick={this.removeMenu} to="/settings" className="title-bar-menu-sub-link">Settings</Link>
                     <Link onClick={this.removeMenu} to="/upload" className="title-bar-menu-sub-link">Upload</Link>
-                    <Link onClick={this.removeMenu} to={"/user/" + this.state.userID}  className="title-bar-menu-sub-link">Profile</Link>
+                    <a onClick={this.removeMenu} href={"/user/" + this.state.userID}  className="title-bar-menu-sub-link">Profile</a>
                     <Link onClick={this.removeMenu} to="/logout" className="title-bar-menu-sub-link">Logout</Link>
                 </div>
             </div>
@@ -66,13 +65,13 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     }
     
     render() {
-        if (this.props.username === ""){
+        if (this.props.jwtUserInfo.username === ""){
             return <Link to="/login" className="title-bar-page-link"><p className="title-bar-page">Login</p> <img className="title-bar-icon" src={tabIcon} alt="Tab Icon"/></Link>
         }
         return (
             <div>
                 {/* <Link to="/logout"> */}
-                    <p className="title-bar-page" onMouseEnter={this.showMenu} onClick={this.showMenu}>{this.props.username}</p>
+                    <p className="title-bar-page" onMouseEnter={this.showMenu} onClick={this.showMenu}>{this.props.jwtUserInfo.username}</p>
                     <img onClick={this.showMenu} className="title-bar-icon" src={tabIcon} alt="TabIcon"/> 
                 {/* </Link> */}
                     {this.state.showMenu ? this.renderMenu() : <></>}
