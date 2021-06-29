@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
-import "./VideoInfo.css"
-import { backendURL } from '../../Config';
-import VideoMetaDataModel from "../../Models/VideoMetadataModel";
-import UserMetaDataModel from "../../Models/UserMetaDataModel";
+import React, { Component } from 'react';
+import jwt_decode from '../../Common/Helper/JwtDecoder';
 import { JwtUserInfo } from '../../Common/JwtContext/JwtContext';
+import { backendURL } from '../../Config';
+import UserMetaDataModel from "../../Models/UserMetaDataModel";
+import VideoMetaDataModel from "../../Models/VideoMetadataModel";
 import LikeIconLiked from "./like_icon_liked.svg";
 import LikeIconNormal from "./like_icon_normal.svg";
-import jwt_decode from '../../Common/Helper/JwtDecoder';
-import UserModelPrivate from '../../Models/UserModelPrivate';
+import EditIcon from "./edit_icon.svg";
+import "./VideoInfo.css";
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -16,6 +17,8 @@ interface VideoInfoState {
     userMetaData: UserMetaDataModel | null,
     liked: boolean;
     like_fail: boolean;
+    isCreator: boolean;
+    editMode: boolean;
 }
 
 interface VideoInfoProps {
@@ -30,12 +33,13 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
             videoMetaData: null,
             userMetaData: null,
             liked: false,
-            like_fail: false
+            like_fail: false,
+            isCreator: false,
+            editMode: false
         };
     }
     componentDidMount = () => {
         this.fetchDataFromApi();
-        this.getLike();
     }
 
     async fetchDataFromApi() {
@@ -56,6 +60,9 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
             this.setState({
                 videoMetaData: videoDataFetched,
             });
+            if (this.props.jwtUserInfo.jwtToken !== "") {
+                this.getLike();
+            }
             let userDataFetched: UserMetaDataModel | null = null;
             await fetch(backendURL + '/user/getUser?id=' + this.state.videoMetaData?.UserID)
                 .then((response: Response) => {
@@ -71,16 +78,18 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
             if (httpCode === 200) {
                 this.setState({
                     userMetaData: userDataFetched,
-                })
+                });
+                if (this.props.jwtUserInfo.jwtToken !== "") {
+                    this.isCreator();
+                }
             }
         }
     }
 
     async getLike() {
         let httpCode: number = 0;
-        let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"];
-        let user: UserModelPrivate = {};
-        await fetch(backendURL + "/secure/user/getUser?id=" + userID, {
+        let liked: boolean = false;
+        await fetch(backendURL + "/secure/video/getLike?id=" + this.state.videoMetaData?.UUID, {
             method: "GET",
             headers: { "Token": this.props.jwtUserInfo.jwtToken }
         })
@@ -88,10 +97,9 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
                 httpCode = response.status;
                 return response.json();
             })
-            .then(json => user = json as UserModelPrivate);
-        if (httpCode === 200) {
-            console.log(user);
-            //this.setState({ liked: true });
+            .then(json => liked = json.likedStatus);
+        if (httpCode === 302) {
+            this.setState({ liked: liked });
         }
     }
 
@@ -106,6 +114,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
             });
         if (httpCode === 201) {
             this.setState({ liked: true });
+            this.fetchDataFromApi();
 
         } if (httpCode === 400) {
             this.setState({ liked: true });
@@ -125,8 +134,19 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
             });
         if (httpCode === 200) {
             this.setState({ liked: false });
+            this.fetchDataFromApi();
         } else {
             this.setState({ like_fail: true });
+        }
+    }
+
+    isCreator = () => {
+        if (this.props.jwtUserInfo.jwtToken !== "") {
+            let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"].toString();
+            let compUserID: string = this.state.videoMetaData?.UserID.toString() as string;
+            if (userID === compUserID) {
+                this.setState({ isCreator: true });
+            }
         }
     }
 
@@ -140,6 +160,10 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+    handleEdit = () => {
+        this.setState({ editMode: true });
+    }
+
     render() {
         if (this.state.videoMetaData === null) {
             return <p>Could not get video data.</p>
@@ -148,16 +172,20 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
         return (
             <div className="video-info-container">
+                {this.state.editMode ? <Redirect to="/"></Redirect> : <></>}
                 <h1 className="video-info-title">{this.state.videoMetaData.Title}</h1>
                 <div className="video-metadata-container">
-                    <p className="video-metadata-info">{this.state.videoMetaData.Views} views - {new Date(this.state.videoMetaData.UploadDate).toDateString()}</p>
-                    <p className="video-metadata-like">{this.state.videoMetaData.Likes} likes </p>
+                    <p className="video-metadata-info">{this.state.videoMetaData.Views} views - {this.state.videoMetaData.Likes} likes - {new Date(this.state.videoMetaData.UploadDate).toDateString()}</p>
+                    <p className="video-metadata-like"> </p>
+                    {this.props.jwtUserInfo.jwtToken !== "" ?
+                        <button className="edit-icon" onClick={this.handleEdit}>
+                            {this.state.isCreator ? <img src={EditIcon} alt="Edit"></img> : <></>}
+                        </button>
+                        : <></>}
                     {this.props.jwtUserInfo.jwtToken !== "" ?
                         <button className="like-icon" onClick={this.handleLike}>
                             {this.state.liked ? <img src={LikeIconLiked} alt="Like"></img> : <img src={LikeIconNormal} alt="Like"></img>}
-                        </button>
-                        : <></>}
-
+                        </button> : <></>}
                 </div>
                 <hr />
                 <div className="video-description-container">
