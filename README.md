@@ -1,6 +1,26 @@
-# Asciiflix Webserver
 
-## Development
+# Asciiflix Webclient
+
+Imagine this, you just spent an entire summer on netflix. 
+This sucks, netflix, prime, etc. are all far too addictive and in many cases impossible to use with german bandwidth.
+What we need, is a bad version of netflix with low bandwidth usage. 
+Asciiflix can provide all of these features!
+
+<!-- TODO: Add Demo Image -->
+
+## Table of Contents
+- [Contributing](#contributing) 
+- [License](#license)
+
+
+
+## Contributing
+
+Contributions are always welcome!
+
+If you want to solve an issue or add a feature, just hit us up with a new pull request.
+
+### Development
 
 Make sure node, npm, and yarn are installed.
 Also note that all dependencies (``node_modules``) should be installed, if not, run:
@@ -29,3 +49,6 @@ Of course you have to install docker on your dev host. After installing docker y
 1. Press `CTRL + SHIFT + P`
 2. Type `Remote-Containers: Reopen in Container`, but keep in mind your current VSCode project should be the asciiflix server project
 3. VSCode will download a docker image, this can take some minutes. After the download is finished, VSCode reopens the project in a docker-container. Now you can develop, debug and do some dev stuff..
+## License
+
+[GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html)

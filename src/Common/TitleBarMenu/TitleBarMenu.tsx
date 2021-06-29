@@ -39,8 +39,8 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
                 <div className="title-bar-menu-cover" onMouseEnter={this.removeMenu} onClick={this.removeMenu}></div>
                 <div className="title-bar-menu-container">
                     <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.username}</p>
-                    <Link onClick={this.removeMenu} to="/" className="title-bar-menu-sub-link">Settings</Link>
-                    <Link onClick={this.removeMenu} to="/" className="title-bar-menu-sub-link">Upload</Link>
+                    <Link onClick={this.removeMenu} to="/settings" className="title-bar-menu-sub-link">Settings</Link>
+                    <Link onClick={this.removeMenu} to="/upload" className="title-bar-menu-sub-link">Upload</Link>
                     <Link onClick={this.removeMenu} to="/" className="title-bar-menu-sub-link">Profile</Link>
                     <Link onClick={this.removeMenu} to="/logout" className="title-bar-menu-sub-link">Logout</Link>
                 </div>

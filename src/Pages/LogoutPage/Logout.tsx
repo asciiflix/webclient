@@ -1,24 +1,40 @@
 import { Component } from "react";
-import { UserContext } from "../../UserContext";
-
+import { clearJwtToken, clearUnameToken, JwtConext } from "../../Common/JwtContext/JwtContext";
+import { backendURL } from "../../Config";
+import "./LogoutPage.css"
 
 export default class Logout extends Component {
-    static contextType = UserContext;
+
+    setParentContextState: Function = () => { };
 
     logout = () => {
-        if (this.context === null) {
-            return <h1>Not Logged In</h1>
-        } else if (localStorage.getItem('jwt') !== null) {
-            localStorage.removeItem("jwt");
-            this.context.rerender("", "");
-            this.context = null;
+        if (localStorage.getItem('jwt') !== null) {
+            clearUnameToken();
+            clearJwtToken();
         }
-        return <h1>User Logged Out!</h1>
+        return <h1 className="logout-message">You have been successfully logged out...</h1>
+    }
+
+    async logoutFromAPI(jwt: string) {
+        await fetch(backendURL + "/secure/logout", {
+            method: "GET",
+            headers: { "Token": jwt }
+        });
+    }
+
+    componentDidMount() {
+        this.setParentContextState("");
     }
 
     render() {
         return (
-            this.logout()
+            <JwtConext.Consumer>
+                {({ jwtUserInfo, changeJwt }) => {
+                    this.setParentContextState = changeJwt;
+                    this.logoutFromAPI(jwtUserInfo.jwtToken);
+                    return this.logout()
+                }}
+            </JwtConext.Consumer>
         )
     }
 }
