@@ -16,6 +16,7 @@ import SearchPage from './Pages/SearchPage/SearchPage';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import UploadPage from './Pages/UploadPage/UploadPage';
 import VideoPage from './Pages/VideoPage/VideoPage';
+import VideoEditPage from './Pages/VideoEditPage/VideoEditPage';
 
 
 interface AppProps {
@@ -61,6 +62,7 @@ export default class App extends React.Component<AppProps, AppState>{
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
                 <Route path="/user/:userId" component={UserProfilePage} />
+                <Route path="/edit/:videoId" component={VideoEditPage} />
                 <Route path="/upload" component={UploadPage} />
                 <Route path="/settings" component={SettingsPage} />
                 <Route path="/login" component={LoginPage} />
