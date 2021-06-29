@@ -7,6 +7,9 @@ import TitleBar from './Common/TitleBar/TitleBar';
 import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
 import LoginPage from './Pages/LoginPage/LoginPage';
+import "./App.css"
+import "./Global.css"
+import UserProfilePage from './Pages/UserProfilePage/UserProfilePage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import Logout from './Pages/LogoutPage/Logout';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
@@ -56,6 +59,7 @@ export default class App extends React.Component<AppProps, AppState>{
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
+                <Route path="/user/:userId" component={UserProfilePage} />
                 <Route path="/upload" component={UploadPage} />
                 <Route path="/settings" component={SettingsPage} />
                 <Route path="/login" component={LoginPage} />
