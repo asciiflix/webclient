@@ -5,10 +5,19 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+h2 {
+  font-weight: 400;
+}
 
-.comment-form-container {
-  display: grid;
-  grid-auto-flow: row;
+.comment-form-textarea {
+  width: 95%;
+  resize: vertical;
+}
+
+.submit-button {
+  font-family: "IBM Plex Mono", monospace;
+  border-style: solid;
+  border-radius: 4px;
 }
 .comment-username {
   font-size: 16px;

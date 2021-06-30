@@ -7,12 +7,10 @@ import { backendURL } from '../../Config';
 import CommentModel from "../../Models/CommentModel";
 import "./Comments.css";
 
-interface CommentInformation {
-    content: string
-}
 
 interface CommentsState {
     commentsData: CommentModel[] | null,
+    formText: string
 }
 
 interface CommentsProps {
@@ -25,6 +23,7 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
         super(props);
         this.state = {
             commentsData: null,
+            formText: ""
         };
     }
     componentDidMount = () => {
@@ -67,9 +66,6 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
         }
     }
 
-    commentInfo: CommentInformation = {
-        content: "",
-    }
 
     async uploadCommentToAPI() {
         let httpCode: number = 0;
@@ -77,20 +73,22 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
             method: "POST",
             headers: { "Token": this.props.jwtUserInfo.jwtToken, "Content-Type": "application/json" },
             body: JSON.stringify({
-                "Content": this.commentInfo.content
+                "Content": this.state.formText
             })
         }).then(response => {
             httpCode = response.status;
         });
         if (httpCode === 201) {
             this.fetchDataFromApi();
-            this.commentInfo.content = "";
         }
 
     }
     submit_comment = (e: SyntheticEvent) => {
         e.preventDefault();
         this.uploadCommentToAPI();
+        this.setState({
+            formText:"",
+        })
     }
 
 
@@ -105,17 +103,18 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
                 {this.props.jwtUserInfo.jwtToken !== "" ?
                 <div className="comment-form-container">
                         <h2>Write Comment</h2>
-                        <form className="comment-submit" onSubmit={this.submit_comment}>
-                        <label className="form-label-text">Content:</label>
-                        <textarea placeholder="A nice comment...." rows={5} required onChange={e => this.commentInfo.content = e.target.value}></textarea>
-                        <button type="submit">Submit</button>
+                        <form onSubmit={this.submit_comment}>
+                        <textarea className="comment-form-textarea" placeholder="Write something nice..." rows={5} value={this.state.formText} required onChange={e => this.setState({formText: e.target.value,})}></textarea><br/>
+                        <button className="submit-button" type="submit">Submit</button>
                     </form>
                     <hr className="line"/>
                 </div>: <></>}
             <div className="comments-container">
+            <h2>Comments</h2>
+            <hr className="line"/>
                       {this.state.commentsData.map((comment, index) => <div className="comment-container">
                           <p><Link to={"/user/" + comment.UserID} className="comment-username">{comment.Username}</Link> on {new Date(comment.CreatedAt).toDateString()}</p>
-                          <p>{comment.Content}</p>
+                          <pre>{comment.Content}</pre>
                           <hr className="line"/>
                       </div>)}
             </div>
