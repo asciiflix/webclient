@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { match } from 'react-router';
+import shortCreatorName from '../../Common/Helper/UserNameShorter';
 import VideoPreview from '../../Common/VideoPreview/VideoPreview';
 import { backendURL } from '../../Config';
 import UserMetaDataModel from '../../Models/UserMetaDataModel';
@@ -36,7 +37,7 @@ export default class VideoPage extends Component<UserProfilePageProps, UserProfi
             })
             .then((json) => {
                 fetchedUserData = json as UserMetaDataModel;
-
+                fetchedUserData.Name = shortCreatorName(fetchedUserData.Name);
             })
             .catch(e => {
                 fetchedUserData = null;
