@@ -10,3 +10,9 @@
         grid-template-columns: repeat(auto-fill, minmax(var(--video-preview-width), 1fr));
     }
 }
+
+@media screen and (min-width: 500px) {
+    .recommendations-container {
+        justify-items: center;
+    }
+}
