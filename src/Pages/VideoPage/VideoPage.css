@@ -3,7 +3,7 @@
     grid-column-gap: 40px;
     grid-row-gap: 0px;
     padding-top: 40px;
-    grid-template-rows: min-content 1fr;
+    grid-template-rows: min-content min-content 1fr;
 }
 
 .video-info-title {

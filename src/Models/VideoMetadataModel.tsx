@@ -1,3 +1,5 @@
+import CommentModel from "./CommentModel"
+
 export default interface VideoMetaDataModel {
     UUID: string
     Title: string
