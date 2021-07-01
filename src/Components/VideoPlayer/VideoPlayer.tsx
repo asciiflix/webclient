@@ -139,7 +139,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
                 {this.addButtonSeenStyleCode()}
                 <div className="video-row-container">
                     {this.state.video.Frames[this.state.frameIndex].Rows.map((row, index) => 
-                            <pre className="video-player-row" key={index}>{row}</pre>
+                            <pre className="video-player-row" key={index} dangerouslySetInnerHTML={{ __html: row }}></pre>
                             )
                         }  
                 </div>
