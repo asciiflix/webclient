@@ -6,9 +6,7 @@ export default class RecommendationBar extends Component {
     render() {
         return (
             <div className="recommendation-bar-container">
-                <div className="recommendation">
-                    <Recommendations limit={4}></Recommendations>
-                </div>
+                <Recommendations limit={4}></Recommendations>
             </div>
         )
     }

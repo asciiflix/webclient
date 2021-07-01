@@ -2,15 +2,18 @@
     background-color: var(--recomendation-bar-color);
     min-width: var(--recomendation-bar-min-width);
     height: 950px;
+    display: grid;
     grid-column: 2;
     grid-row-start: 1;
     grid-row-end: 3;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
 }
 
 .recommendation {
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 
