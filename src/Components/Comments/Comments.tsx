@@ -113,7 +113,7 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
             <h2 className="comments-title">Comments</h2>
             <hr className="line"/>
                       {this.state.commentsData.map((comment, index) => <div className="comment-container">
-                          <p><Link to={"/user/" + comment.UserID} className="comment-username">{comment.Username}</Link> on {new Date(comment.CreatedAt).toDateString()}</p>
+                          <p><Link to={"/user/" + comment.UserID} className="comment-username">{comment.Username}</Link> on {new Date(comment.CreatedAt).toLocaleString("DE")}</p>
                           <pre className="comment-text">{comment.Content}</pre>
                           <hr className="line"/>
                       </div>)}
