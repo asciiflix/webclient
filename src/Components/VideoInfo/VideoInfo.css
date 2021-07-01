@@ -1,6 +1,7 @@
 .video-info-container {
   grid-row-start: 2;
   grid-column-start: 1;
+  height: fit-content;
 }
 
 .video-info-container > hr {

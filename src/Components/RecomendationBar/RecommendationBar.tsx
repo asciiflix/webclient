@@ -7,7 +7,7 @@ export default class RecommendationBar extends Component {
         return (
             <div className="recommendation-bar-container">
                 <div className="recommendation">
-                    <Recommendations limit={4}></Recommendations>
+                    <Recommendations limit={7}></Recommendations>
                 </div>
             </div>
         )

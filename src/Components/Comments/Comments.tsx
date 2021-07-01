@@ -102,7 +102,7 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
             <div className="comment-section-container">
                 {this.props.jwtUserInfo.jwtToken !== "" ?
                 <div className="comment-form-container">
-                        <h2>Write Comment</h2>
+                        <h2 className="comments-title">Write Comment</h2>
                         <form onSubmit={this.submit_comment}>
                         <textarea className="comment-form-textarea" placeholder="Write something nice..." rows={5} value={this.state.formText} required onChange={e => this.setState({formText: e.target.value,})}></textarea><br/>
                         <button className="submit-button" type="submit">Submit</button>
@@ -110,11 +110,11 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
                     <hr className="line"/>
                 </div>: <></>}
             <div className="comments-container">
-            <h2>Comments</h2>
+            <h2 className="comments-title">Comments</h2>
             <hr className="line"/>
                       {this.state.commentsData.map((comment, index) => <div className="comment-container">
                           <p><Link to={"/user/" + comment.UserID} className="comment-username">{comment.Username}</Link> on {new Date(comment.CreatedAt).toDateString()}</p>
-                          <pre>{comment.Content}</pre>
+                          <pre className="comment-text">{comment.Content}</pre>
                           <hr className="line"/>
                       </div>)}
             </div>
