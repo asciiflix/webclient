@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getUserNameFromAPI } from '../Helper/UsernameApi';
+import shortCreatorName from '../Helper/UserNameShorter';
 import "./VideoPreview.css";
 
 interface VideoPreviewProps {
@@ -24,9 +25,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
 
     async updateCreatorName() {
         let username: string = await getUserNameFromAPI(this.props.creator_id.toString());
-        if (username.length > 10) {
-            username = username.slice(0, 10) + "..."
-        }
+        username = shortCreatorName(username);
         this.setState({
             creator_name: username
         });
