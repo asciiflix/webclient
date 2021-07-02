@@ -6,13 +6,11 @@ This sucks, netflix, prime, etc. are all far too addictive and in many cases imp
 What we need, is a bad version of netflix with low bandwidth usage. 
 Asciiflix can provide all of these features!
 
-<!-- TODO: Add Demo Image -->
+![](./.github/images/Asciiflix_showcase.gif)
 
 ## Table of Contents
 - [Contributing](#contributing) 
 - [License](#license)
-
-()[./.github/images/Asciiflix_showcase.gif]
 
 ## Contributing
 
