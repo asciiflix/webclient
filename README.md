@@ -12,7 +12,7 @@ Asciiflix can provide all of these features!
 - [Contributing](#contributing) 
 - [License](#license)
 
-
+()[./.github/images/Asciiflix_showcase.gif]
 
 ## Contributing
 
