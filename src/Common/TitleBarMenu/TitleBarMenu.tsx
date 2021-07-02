@@ -56,10 +56,9 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
                 <div className="title-bar-menu-container">
                     {this.props.jwtUserInfo.username === "" ?
                         <div>
-                            <p className='title-bar-menu-title title-bar-menu-sub-link'>Guest-User</p>
-                            <Link onClick={this.removeMenu} to="/login" className="title-bar-menu-sub-link">Login</Link>
-                            <Link onClick={this.removeMenu} to="/register" className="title-bar-menu-sub-link">Register</Link>
+                            <Link onClick={this.removeMenu} to="/login"><p className='title-bar-menu-title title-bar-menu-sub-link'>Login</p></Link>
                             <Link onClick={this.removeMenu} to="/about" className="title-bar-menu-sub-link">About</Link>
+                            <Link onClick={this.removeMenu} to="/login" className="title-bar-menu-sub-link">Login</Link>
                         </div> :
                         <div>
                             <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.jwtUserInfo.username}</p>
@@ -78,14 +77,8 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     render() {
         return (
             <div>
-                {/* <Link to="/logout"> */}
-                {this.props.jwtUserInfo.username === "" ?
-                    /*<p className="title-bar-page" onMouseEnter={this.showMenu} onClick={this.showMenu}>Menu</p> */
-                    <img onClick={this.showMenu} className="title-bar-page" src={tabIcon} alt="TabIcon" /> :
-                    <p className="title-bar-page" onMouseEnter={this.showMenu} onClick={this.showMenu}>{this.props.jwtUserInfo.username}</p>
-                }
+                <p className="title-bar-page" onMouseEnter={this.showMenu} onClick={this.showMenu}>{this.props.jwtUserInfo.username === "" ? "Login" : this.props.jwtUserInfo.username}</p>
                 <img onClick={this.showMenu} className="title-bar-icon" src={tabIcon} alt="TabIcon" />
-                {/* </Link> */}
                 {this.state.showMenu ? this.renderMenu() : <></>}
             </div>
         )
