@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { match } from 'react-router';
+import { JwtConext } from '../../Common/JwtContext/JwtContext';
 import RecommendationBar from '../../Components/RecomendationBar/RecommendationBar';
 import VideoInfo from '../../Components/VideoInfo/VideoInfo';
 import VideoPlayer from '../../Components/VideoPlayer/VideoPlayer';
+import Comments from '../../Components/Comments/Comments';
 import "./VideoPage.css"
 
 interface VideoPageProps {
@@ -19,11 +21,16 @@ export default class VideoPage extends Component<VideoPageProps> {
 
     render() {
         return (
-            <div className="video-page-container">
-                <VideoPlayer videoId={this.videoId} />
-                <VideoInfo videoId={this.videoId} />
-                <RecommendationBar/>
-            </div>
+            <JwtConext.Consumer>
+                {({ jwtUserInfo, changeJwt }) =>
+                    <div className="video-page-container">
+                        <VideoPlayer videoId={this.videoId} />
+                        <VideoInfo videoId={this.videoId} jwtUserInfo={jwtUserInfo} />
+                        <Comments videoId={this.videoId} jwtUserInfo={jwtUserInfo} />
+                        <RecommendationBar />
+                    </div>
+                }
+            </JwtConext.Consumer>
         )
     }
 }

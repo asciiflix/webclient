@@ -6,10 +6,12 @@ import { backendURL } from "../../Config";
 import UserModelPrivate from "../../Models/UserModelPrivate";
 import { UserContext } from "../../UserContext";
 import "../Login/UserLogin.css";
+import "../Upload/UploadGIF.css";
 import "./Settings.css";
 
 interface AccountInformation {
     username: string
+    description: string
     email: string
 }
 
@@ -29,7 +31,9 @@ interface StatusState {
     PWFailed: boolean
     PWChanged: boolean
     NameChanged: boolean
+    MailWrong: boolean
     MailChanged: boolean
+    DescChanged: boolean
     AccountDeleted: boolean
     CurrenUserData: UserModelPrivate;
 }
@@ -43,7 +47,9 @@ export default class Settings extends Component<StatusProps, StatusState> {
             PWFailed: false,
             PWChanged: false,
             NameChanged: false,
+            MailWrong: false,
             MailChanged: false,
+            DescChanged: false,
             AccountDeleted: false,
             CurrenUserData: {}
         };
@@ -51,6 +57,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
 
     accountInformation: AccountInformation = {
         username: "",
+        description: "",
         email: ""
     };
 
@@ -90,6 +97,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
             headers: { "Token": this.props.jwtUserInfo.jwtToken, "Content-Type": "application/json" },
             body: JSON.stringify({
                 "Name": this.accountInformation.username,
+                "Description": this.accountInformation.description,
                 "EMail": this.accountInformation.email
             })
         })
@@ -107,7 +115,13 @@ export default class Settings extends Component<StatusProps, StatusState> {
                     MailChanged: true
                 });
             }
-
+            if (this.accountInformation.description !== "") {
+                this.setState({
+                    DescChanged: true
+                });
+            }
+        } else if (httpCode === 409) {
+            this.setState({ MailWrong: true });
         }
     }
 
@@ -207,10 +221,15 @@ export default class Settings extends Component<StatusProps, StatusState> {
             <div className="settings-form-container">
                 <div className="empty-div-settings">
                     <h1 className="form-title-text">Settings</h1>
+                        <h2 className="form-title-text">Change Account Information</h2>
+                        {this.state.MailChanged ? <Redirect to="/logout"></Redirect> : <></>}
+                        {this.state.DescChanged ? <p className="form-settings-successfully">Description Successfully Changed!</p> : <></>}
+                        {this.state.MailWrong ? <p className="login-form-failed-login">E-Mail is already taken!</p> : <></>}
                     <form className="settings-grid" onSubmit={this.submit_accInfos}>
-                        <h2>Change Account Information</h2>
                         <label className="form-label-text">Username:</label>
                         <input className="form-input" type="name" placeholder={this.state.CurrenUserData.Name} onChange={e => this.accountInformation.username = e.target.value}></input>
+                        <label className="form-label-text">Description:</label>
+                        <textarea className="upload-input-desc" placeholder={this.state.CurrenUserData.Description} onChange={e => this.accountInformation.description = e.target.value}></textarea>
                         <label className="form-label-text">E-Mail:</label>
                         <input className="form-input" type="email" placeholder={this.state.CurrenUserData.Email} onChange={e => this.accountInformation.email = e.target.value}></input>
                         {this.state.NameChanged ?
@@ -219,11 +238,13 @@ export default class Settings extends Component<StatusProps, StatusState> {
                                     this.state.NameChanged ? this.finalizeNameChange() : <></>)}
                             </UserContext.Consumer> : <></>}
 
-                        {this.state.MailChanged ? <Redirect to="/logout"></Redirect> : <></>}
                         <button className="login-button" type="submit">Apply Changes</button>
                     </form>
 
-                    <h2>Change Secrets</h2>
+                    <h2 className="form-title-text">Change Secrets</h2>
+                    {this.state.PWWrong ? <p className="login-form-failed-login">Current Password did not match</p> : <></>}
+                    {this.state.PWFailed ? <p className="login-form-failed-login">New Password does not match</p> : <></>}
+                    {this.state.PWChanged ? <p className="form-settings-successfully">Password Successfully Changed <Redirect to="/logout"></Redirect></p> : <></>}
                     <form className="settings-grid" onSubmit={this.submit_accSecret}>
                         <label className="form-label-text">Current Password:</label>
                         <input className="form-input" type="password" placeholder="**********" onChange={e => this.accountSecret.currentPW = e.target.value}></input>
@@ -231,13 +252,10 @@ export default class Settings extends Component<StatusProps, StatusState> {
                         <input className="form-input" type="password" placeholder="**********" onChange={e => this.accountSecret.newPW = e.target.value}></input>
                         <label className="form-label-text">Repeat New Password:</label>
                         <input className="form-input" type="password" placeholder="**********" onChange={e => this.accountSecret.newPWRepeat = e.target.value}></input>
-                        {this.state.PWWrong ? <p className="login-form-failed-login">Current Password did not match</p> : <></>}
-                        {this.state.PWFailed ? <p className="login-form-failed-login">New Password does not match</p> : <></>}
-                        {this.state.PWChanged ? <p className="form-settings-successfully">Password Successfully Changed <Redirect to="/logout"></Redirect></p> : <></>}
                         <button className="login-button" type="submit">Change Password</button>
                     </form>
 
-                    <h2>Danger Zone</h2>
+                    <h2 className="form-title-text">Danger Zone</h2>
                     <form className="settings-grid" onSubmit={this.submit_deleteAcc}>
                         <label className="form-label-text">Delete Account:</label>
                         <button className="delete-button" type="submit">Delete Account</button>

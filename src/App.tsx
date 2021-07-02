@@ -7,10 +7,17 @@ import TitleBar from './Common/TitleBar/TitleBar';
 import "./Global.css";
 import HomePage from './Pages/HomePage/HomePage';
 import LoginPage from './Pages/LoginPage/LoginPage';
+import "./App.css"
+import "./Global.css"
+import UserProfilePage from './Pages/UserProfilePage/UserProfilePage';
 import RegisterPage from './Pages/LoginPage/RegisterPage';
 import Logout from './Pages/LogoutPage/Logout';
+import SearchPage from './Pages/SearchPage/SearchPage';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
+import UploadPage from './Pages/UploadPage/UploadPage';
 import VideoPage from './Pages/VideoPage/VideoPage';
+import VideoEditPage from './Pages/VideoEditPage/VideoEditPage';
+import AboutPage from './Pages/AboutPage/AboutPage';
 
 
 interface AppProps {
@@ -55,10 +62,15 @@ export default class App extends React.Component<AppProps, AppState>{
             <div className="main-content">
               <Switch>
                 <Route path="/watch/:videoId" component={VideoPage} />
+                <Route path="/user/:userId" component={UserProfilePage} />
+                <Route path="/edit/:videoId" component={VideoEditPage} />
+                <Route path="/upload" component={UploadPage} />
                 <Route path="/settings" component={SettingsPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />
+                <Route path="/search" component={SearchPage} />
+                <Route path="/about" component={AboutPage} />
                 <Route path="/" component={HomePage} />
               </Switch>
             </div>

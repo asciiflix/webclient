@@ -1,6 +1,7 @@
 .video-info-container {
   grid-row-start: 2;
   grid-column-start: 1;
+  height: fit-content;
 }
 
 .video-info-container > hr {
@@ -14,6 +15,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.edit-icon {
+  margin-left: auto;
+  width: 54px;
+  border-style: none;
+  background-color: transparent;
+}
+
+.like-icon {
+  width: 64px;
+  border-style: none;
+  background-color: transparent;
+}
+
+.video-author-link {
+  text-decoration: none;
+  color: black;
 }
 
 @media screen and (max-width: 1300px) {

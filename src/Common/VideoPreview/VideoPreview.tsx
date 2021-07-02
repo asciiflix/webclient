@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getUserNameFromAPI } from '../Helper/UsernameApi';
+import shortCreatorName from '../Helper/UserNameShorter';
 import "./VideoPreview.css";
 
 interface VideoPreviewProps {
@@ -24,6 +25,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
 
     async updateCreatorName() {
         let username: string = await getUserNameFromAPI(this.props.creator_id.toString());
+        username = shortCreatorName(username);
         this.setState({
             creator_name: username
         });
@@ -39,7 +41,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
                 <a href={"/watch/" + this.props.uuid} className="video-preview-link"><div className="video-preview-thumbnail"></div></a>
                 <p className="video-preview-title">
                     <a href={"/watch/" + this.props.uuid} className="video-preview-link">{this.props.title}</a>
-                    <Link to="/user/{userName}" className="video-preview-creator"> - {this.state.creator_name}</Link>
+                    <Link to={"/user/" + this.props.creator_id} className="video-preview-creator"> - {this.state.creator_name}</Link>
                 </p>
             </div>
         )

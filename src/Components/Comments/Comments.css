@@ -1,0 +1,42 @@
+.line {
+  height: 1px;
+  border: 0;
+  background-color: lightgrey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.comments-title {
+  font-weight: 400;
+}
+
+.comment-form-textarea {
+  width: 95%;
+  resize: vertical;
+  border-radius: 10px;
+  border-color: white;
+  border-style: solid;
+  font-family: "IBM Plex Mono", monospace;
+  margin-bottom: 1.5em;
+}
+
+.submit-button {
+  font-family: "IBM Plex Mono", monospace;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 0.5em;
+}
+.comment-username {
+  font-size: 16px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.comment-text {
+  font-size: 18px;
+}
+
+.comment-section-container {
+  grid-row: 3;
+  grid-column: 1;
+}

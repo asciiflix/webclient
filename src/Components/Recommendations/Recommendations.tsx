@@ -80,6 +80,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
             this.fetchVideoDataPublic();
         } else {
             this.fetchVideoDataPrivate();
+            this.setState({hasPrivateVideos: true});
         }
     }
 
