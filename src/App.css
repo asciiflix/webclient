@@ -5,6 +5,10 @@ body {
     background-color: var(--main-background-color);
 }
 
+*:focus {
+    outline: none;
+}
+
 .main-content {
     max-width: var(--main-content-width);
     margin: 0 auto;
