@@ -64,7 +64,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
 
     render() {
         return (
-            <div className="register-form-container">
+            <div className="login-form-container">
                 {this.state.isRegistered ? <Redirect to="/login"></Redirect> :                    
                     <form onSubmit={this.submit_register}>                       
                         <div className="empty-div">

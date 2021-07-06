@@ -142,7 +142,7 @@ export default class VideoEdit extends Component<EditProps, EditStats> {
                         <label className="form-label-text">Description:</label>
                         <textarea className="upload-input-desc" placeholder={this.state.videoMetaData?.Description} rows={10} onChange={e => this.videoEdit.description = e.target.value}></textarea>
 
-                        <button type="submit">Update Video</button>
+                        <button className="login-button" type="submit">Update Video</button>
                     </form>
 
                     <h2 className="form-title-text">Danger Zone</h2>

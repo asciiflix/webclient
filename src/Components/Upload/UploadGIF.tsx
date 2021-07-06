@@ -91,6 +91,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
             <div className="upload-form-container">
                 <div className="empty-div-settings">
                     <h1 className="form-title-text">Upload</h1>
+                    <p>Upload your favorite GIF and Asciiflix will create a nice asciiflix-style "Video"</p>
                     {this.state.uploaded ? <div className="form-settings-successfully"> <p>Video Successfully Uploaded! Here is the <a className="link-text" href={this.state.videoURL}>Link</a></p></div> : <></>}
                     {this.state.failed ? <p className="login-form-failed-login">Upload Failed!</p> : <></>}
 
@@ -109,7 +110,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
                         <label className="form-label-text">Description:</label>
                         <textarea className="upload-input-desc" placeholder="A very nice ascii-gif...." rows={10} required onChange={e => this.uploadData.description = e.target.value}></textarea>
 
-                        <button>Upload</button>
+                        <button className="login-button" type="submit">Upload</button>
                     </form>
                 </div>
             </div>
