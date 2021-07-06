@@ -40,3 +40,9 @@
   grid-row: 3;
   grid-column: 1;
 }
+
+@media screen and (max-width: 1300px) {
+  .comment-section-container {
+      grid-row: 4;
+  }
+}
