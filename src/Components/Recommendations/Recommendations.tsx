@@ -96,6 +96,8 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
             <JwtConext.Consumer>
                 {({jwtUserInfo, changeJwt}) => {
                     this.jwtToken = jwtUserInfo.jwtToken;
+                    if (this.state.videos === null)
+                        return <></>
                     return <div className="recommendations-container">
                         {this.state.videos.map((video, index) => <VideoPreview key={index} title={video.Title} creator_id={video.UserID} uuid={video.UUID}></VideoPreview>)}
                     </div>
