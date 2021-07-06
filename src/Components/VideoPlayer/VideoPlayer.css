@@ -25,6 +25,7 @@
     /* opacity: 0; */
     background-color: transparent;
     border-style: none;
+    border-color: red;
     position: absolute; 
     left: 50%;
     top: 50%;
