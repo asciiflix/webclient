@@ -12,7 +12,6 @@ interface TitleBarMenuProps {
 
 interface TitleBarMenuState {
     showMenu: boolean
-    userID: string
 }
 
 export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarMenuState> {
@@ -20,8 +19,7 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     constructor(props: TitleBarMenuProps) {
         super(props);
         this.state = {
-            showMenu: false,
-            userID: ""
+            showMenu: false
         };
     }
 
@@ -38,13 +36,12 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
     }
 
     componentDidMount = () => {
-        this.getUserURL();
     }
 
-    getUserURL = () => {
+    getUserID = () => {
         if (this.props.jwtUserInfo.jwtToken !== "") {
             let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"];
-            this.setState({ userID: userID });
+            return userID;
         }
     }
 
@@ -65,7 +62,7 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
                             <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.jwtUserInfo.username}</p>
                             <Link onClick={this.removeMenu} to="/settings" className="title-bar-menu-sub-link">Settings</Link>
                             <Link onClick={this.removeMenu} to="/upload" className="title-bar-menu-sub-link">Upload</Link>
-                            <a onClick={this.removeMenu} href={"/user/" + this.state.userID} className="title-bar-menu-sub-link">Profile</a>
+                            <a onClick={this.removeMenu} href={"/user/" + this.getUserID()} className="title-bar-menu-sub-link">Profile</a>
                             <Link onClick={this.removeMenu} to="/about" className="title-bar-menu-sub-link">About</Link>
                             <Link onClick={this.removeMenu} to="/logout" className="title-bar-menu-sub-link">Logout</Link>
                         </div>
