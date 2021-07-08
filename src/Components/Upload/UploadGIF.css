@@ -47,6 +47,7 @@
 
 .upload-input-desc{
     background-color: var(--input-field-color);
+    font-family: 'IBM Plex Mono', monospace;
     border-style: solid;
     min-width: 98%;
     /* BugFix for limit with size */
@@ -54,6 +55,7 @@
     border-radius: 10px;
     margin-bottom: 8%;
     margin-top: 5px;
+    margin-left: 0px;
 }
 
 

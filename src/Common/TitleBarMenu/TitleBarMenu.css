@@ -41,7 +41,6 @@
     text-decoration: underline;
 }
 
-
 @media screen and (min-width: 1300px) {
     .title-bar-menu-container {
         transform: translateX(-40%) translateY(-30%);

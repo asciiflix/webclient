@@ -11,6 +11,7 @@
 
 .form-input {
   background-color: var(--input-field-color);
+  font-family: 'IBM Plex Mono', monospace;
   border-style: solid;
   width: 98%;
   height: 30px;
