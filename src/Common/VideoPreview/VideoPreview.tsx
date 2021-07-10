@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { UNLOADED_VIDEO } from '../../Components/VideoPlayer/VideoPlayer';
 import { backendURL } from '../../Config';
-import VideoData from '../../Models/VideoModel';
+import { VideoFrame } from '../../Models/VideoModel';
 import { getUserNameFromAPI } from '../Helper/UsernameApi';
 import shortCreatorName from '../Helper/UserNameShorter';
 import "./VideoPreview.css";
@@ -15,12 +14,7 @@ interface VideoPreviewProps {
 
 interface VideoPreviewState {
     creator_name: string
-    video: VideoData | null
-}
-
-interface VideoDataWrapper {
-    content: { Video: VideoData }
-    message: string
+    video: VideoFrame | null
 }
 
 export default class VideoPreview extends Component<VideoPreviewProps, VideoPreviewState> {
@@ -48,15 +42,14 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
 
     async fetchVideoFromApi() {
         let httpCode: number = 0;
-        let videoDataFetched: VideoData | null = UNLOADED_VIDEO;
-        await fetch(backendURL + '/video/getContent?id=' + this.props.uuid)
+        let videoDataFetched: VideoFrame | null = null;
+        await fetch(backendURL + '/video/getThumbnail?id=' + this.props.uuid)
             .then((response: Response) => {
                 httpCode = response.status;
                 return response.json();
             })
             .then((json) => {
-                let apiData: VideoDataWrapper = json as VideoDataWrapper;
-                videoDataFetched = apiData.content.Video;
+                videoDataFetched = json as VideoFrame;
             }).catch(e => {
                 videoDataFetched = null;
             });
@@ -74,10 +67,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
                     <div className="video-preview-thumbnail">
                         {this.state.video !== null ?
                             <div className="video-thumbnail-content">
-                                {this.state.video.Frames[0].Rows.map((row, index) =>
-                                    <pre className="video-player-row" key={index}>{row}</pre>
-                                )
-                                }
+                                {this.state.video.Rows.map((row, index) => <pre className="video-player-row" key={index}>{row}</pre>)}
                             </div> : <></>}
                     </div>
                 </a>
