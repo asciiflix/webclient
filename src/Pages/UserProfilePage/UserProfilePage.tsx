@@ -66,7 +66,7 @@ export default class VideoPage extends Component<UserProfilePageProps, UserProfi
                     <div className="user-metadata-content">
                         <p className="user-metadata-description">{this.state.userMetaData.Description}</p>
                         <div className="user-video-container">
-                            {this.state.userMetaData.Videos !== null ? this.state.userMetaData.Videos.map((video, index) => <VideoPreview title={video.Title} uuid={video.UUID} creator_id={video.UserID}></VideoPreview>): <p>User has no videos.</p>}
+                            {this.state.userMetaData.Videos !== null ? this.state.userMetaData.Videos.map((video, index) => <VideoPreview key={index} title={video.Title} uuid={video.UUID} creator_id={video.UserID}></VideoPreview>): <p>User has no videos.</p>}
                         </div>
                     </div>
                 </div>
