@@ -115,7 +115,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
                         <label className="form-label-text">Description:</label>
                         <textarea className="upload-input-desc" placeholder="A very nice ascii-gif...." rows={10} required onChange={e => this.uploadData.description = e.target.value}></textarea>
 
-                        <button className="login-button" type="submit">Upload</button>
+                        <button className="login-button" type="submit" disabled={this.state.uploaded}>Upload</button>
                     </form>
                 </div>
             </div>
