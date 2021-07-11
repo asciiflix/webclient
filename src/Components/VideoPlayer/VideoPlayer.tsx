@@ -5,7 +5,7 @@ import "./VideoPlayer.css"
 import playSvg from "./play.svg"
 import pauseSvg from "./pause.svg"
 
-const UNLOADED_VIDEO: VideoData | null = null;
+export const UNLOADED_VIDEO: VideoData | null = null;
 const INVALID_VIDEO: VideoData | null = {Frames: []};
 
 interface VideoPlayerProps {

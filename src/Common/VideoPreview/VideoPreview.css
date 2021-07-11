@@ -11,7 +11,16 @@
     width: var(--video-preview-width);
     height: 185px;
     background-color: #323232;
+    overflow: hidden;
+}
 
+.video-thumbnail-content {
+    overflow: hidden;
+    font-size: 3.2pt;
+    color: gray;
+    transform: scale(1.4,1.4);
+    margin: auto;
+    width: fit-content;
 }
 
 .video-preview-title {
@@ -30,5 +39,10 @@
 @media screen and (max-width: 500px) {
     .video-preview-thumbnail {
         width: auto;
+    }
+    .video-thumbnail-content {
+        font-size: 2.6pt;
+        transform: scale(2);
+        margin-top: 1em;
     }
 }
