@@ -9,6 +9,7 @@ import LikeIconNormal from "./like_icon_normal.svg";
 import EditIcon from "./edit_icon.svg";
 import "./VideoInfo.css";
 import { Redirect, Link } from 'react-router-dom';
+import getLang from '../../Common/Helper/Date';
 
 
 
@@ -175,7 +176,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
                 {this.state.editMode ? <Redirect to={"/edit/" + this.state.videoMetaData.UUID}></Redirect> : <></>}
                 <h1 className="video-info-title">{this.state.videoMetaData.Title}</h1>
                 <div className="video-metadata-container">
-                    <p className="video-metadata-info">{this.state.videoMetaData.Views} views - {this.state.videoMetaData.Likes} likes - {new Date(this.state.videoMetaData.UploadDate).toDateString()}</p>
+                    <p className="video-metadata-info">{this.state.videoMetaData.Views} views - {this.state.videoMetaData.Likes} likes - {new Date(this.state.videoMetaData.UploadDate).toLocaleDateString(getLang())}</p>
                     <p className="video-metadata-like"> </p>
                     {this.props.jwtUserInfo.jwtToken !== "" ?
                         <button className="edit-icon" onClick={this.handleEdit}>

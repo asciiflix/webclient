@@ -16,6 +16,7 @@ interface UploadForm {
 interface UploadState {
     uploaded: boolean
     uploadedFile: boolean
+    submitted: boolean
     failed: boolean
     videoURL: string
     videoName: string
@@ -39,6 +40,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
             uploaded: false,
             failed: false,
             uploadedFile: false,
+            submitted: false,
             videoURL: "",
             videoName: ""
         };
@@ -52,7 +54,10 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
 
     submit_upload = (e: SyntheticEvent) => {
         e.preventDefault();
-        this.uploadDataToAPI();
+        if (!this.state.submitted) {
+            this.setState({submitted: true});
+            this.uploadDataToAPI();
+        }
     }
 
     async uploadDataToAPI() {
@@ -80,7 +85,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
             this.setState(
                 { uploaded: true, videoURL: "/watch/" + response_msg });
         } else {
-            this.setState({ failed: true });
+            this.setState({ failed: true, submitted: false });
         }
     }
 
@@ -110,7 +115,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
                         <label className="form-label-text">Description:</label>
                         <textarea className="upload-input-desc" placeholder="A very nice ascii-gif...." rows={10} required onChange={e => this.uploadData.description = e.target.value}></textarea>
 
-                        <button className="login-button" type="submit">Upload</button>
+                        <button className="login-button" type="submit" disabled={this.state.submitted}>Upload</button>
                     </form>
                 </div>
             </div>
