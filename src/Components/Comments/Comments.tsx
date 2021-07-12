@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
+import getLang from '../../Common/Helper/Date';
 import { getUserNameFromAPI } from '../../Common/Helper/UsernameApi';
 import { JwtUserInfo } from '../../Common/JwtContext/JwtContext';
 import { backendURL } from '../../Config';
@@ -113,7 +114,7 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
             <h2 className="comments-title">Comments</h2>
             <hr className="line"/>
                       {this.state.commentsData.map((comment, index) => <div className="comment-container">
-                          <p><Link to={"/user/" + comment.UserID} className="comment-username">{comment.Username}</Link> on {new Date(comment.CreatedAt).toLocaleString("DE")}</p>
+                          <p><Link to={"/user/" + comment.UserID} className="comment-username">{comment.Username}</Link> on {new Date(comment.CreatedAt).toLocaleString(getLang())}</p>
                           <pre className="comment-text">{comment.Content}</pre>
                           <hr className="line"/>
                       </div>)}
