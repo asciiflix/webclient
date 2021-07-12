@@ -61,7 +61,7 @@ export default class TitleBarMenu extends Component<TitleBarMenuProps, TitleBarM
                         <div>
                             <p className='title-bar-menu-title title-bar-menu-sub-link'>{this.props.jwtUserInfo.username}</p>
                             <Link onClick={this.removeMenu} to="/settings" className="title-bar-menu-sub-link">Settings</Link>
-                            <Link onClick={this.removeMenu} to="/upload" className="title-bar-menu-sub-link">Upload</Link>
+                            <a onClick={this.removeMenu} href="/upload" className="title-bar-menu-sub-link">Upload</a>
                             <a onClick={this.removeMenu} href={"/user/" + this.getUserID()} className="title-bar-menu-sub-link">Profile</a>
                             <Link onClick={this.removeMenu} to="/about" className="title-bar-menu-sub-link">About</Link>
                             <Link onClick={this.removeMenu} to="/logout" className="title-bar-menu-sub-link">Logout</Link>
