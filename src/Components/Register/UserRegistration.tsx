@@ -78,7 +78,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
                     <form onSubmit={this.submit_register}>
                         <div className="empty-div">
                             <h1 className="form-title-text">Register</h1>
-                            {this.state.wrongPW ? <p className="login-form-failed-login">New Password does not match</p> : <></>}
+                            {this.state.wrongPW ? <p className="login-form-failed-login">Password does not match</p> : <></>}
                             <label>Username</label>
                             <input className="form-input" type="name" placeholder="Username" required onChange={e => this.register.username = e.target.value}></input>
 
