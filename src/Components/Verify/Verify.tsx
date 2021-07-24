@@ -86,7 +86,7 @@ export default class VerifyComp extends Component<VerifyProps, VerifyStats> {
                         {this.state.send ? <p className="form-settings-successfully">Verification Code has been sent!</p> : <></>}
                         {this.state.failed ? <p className="login-form-failed-login">Verification Failed!</p> : <></>}
                         <label className="form-label-text">Verification Code</label>
-                        <input className="form-input" type="name" placeholder="ee32a526-2012-42db-ab6d-9b3177161fdd" onChange={e => this.setState({ code: e.target.value })}></input>
+                        <input className="form-input" type="name" placeholder="ee32a526-2012-42db-ab6d-9b3177161fdd" required onChange={e => this.setState({ code: e.target.value })}></input>
                         <button className="login-button" type="submit">Verify</button>
                     </form>
                     <button className="code-button" onClick={this.sendCode}>Send me a Verification Code</button>
