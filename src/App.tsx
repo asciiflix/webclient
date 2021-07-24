@@ -18,6 +18,7 @@ import UploadPage from './Pages/UploadPage/UploadPage';
 import VideoPage from './Pages/VideoPage/VideoPage';
 import VideoEditPage from './Pages/VideoEditPage/VideoEditPage';
 import AboutPage from './Pages/AboutPage/AboutPage';
+import VerifyPage from './Pages/VerifyPage/VerifyPage';
 
 
 interface AppProps {
@@ -66,6 +67,7 @@ export default class App extends React.Component<AppProps, AppState>{
                 <Route path="/edit/:videoId" component={VideoEditPage} />
                 <Route path="/upload" component={UploadPage} />
                 <Route path="/settings" component={SettingsPage} />
+                <Route path="/verify" component={VerifyPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Route path="/logout" component={Logout} />

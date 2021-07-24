@@ -20,6 +20,13 @@
     margin-left: 0%;
 }
 
+.verify-link{
+    display: block;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 5%;
+}
+
 .form-settings-successfully{
     color: green;
 }
@@ -46,7 +53,7 @@
         grid-column: labels;
     }
     
-    .settings-grid > input, button {
+    .settings-grid > input, button, a {
         grid-column: inputs;
         margin-top: -1%;
     }

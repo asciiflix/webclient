@@ -1,0 +1,10 @@
+.code-button{
+    font-family: 'IBM Plex Mono', monospace;
+    float: right;
+    margin-top: 1%;
+    margin-right: 2%;
+    background-color: var(--input-field-color);
+    border-style: solid;
+    border-radius: 4px;
+    padding: 3px 7px;
+}
