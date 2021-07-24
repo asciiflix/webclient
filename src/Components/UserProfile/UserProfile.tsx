@@ -36,7 +36,7 @@ export default class UserProfile extends Component<UserProfilePageProps, UserPro
             })
             .then((json) => {
                 fetchedUserData = json as UserMetaDataModel;
-                fetchedUserData.Name = shortCreatorName(fetchedUserData.Name);
+                fetchedUserData.Name = shortCreatorName(fetchedUserData.Name, 14);
             })
             .catch(e => {
                 fetchedUserData = null;

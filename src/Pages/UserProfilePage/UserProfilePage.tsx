@@ -10,7 +10,7 @@ interface UserProfilePageProps {
 export default class UserProfilePage extends Component<UserProfilePageProps> {
     render() {
         return (
-            <div className="search-page">
+            <div className="user-page">
                 <UserProfile userID={this.props.match.params.userId}></UserProfile>
             </div>
         )
