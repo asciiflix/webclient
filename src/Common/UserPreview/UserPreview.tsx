@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import shortCreatorName from '../Helper/UserNameShorter';
 import "./UserPreview.css";
 import circle from "./UserPreview.svg"
 
@@ -27,7 +28,7 @@ export default class UserPreview extends Component<UserPreviewProps> {
             <div className="user-preview-container">
                 <img src={circle} alt="circle" className="user-preview-circle"/>
                 <Link to={"/user/" + this.props.userId} className="user-preview-link">
-                    <p className="user-preview-username">{this.props.username}</p>
+                    <p className="user-preview-username">{shortCreatorName(this.props.username, 15)}</p>
                     <p className="user-preview-desc">{this.getShortDesc()}</p>
                 </Link>
             </div>
