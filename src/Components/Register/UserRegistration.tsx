@@ -21,6 +21,7 @@ interface StatusState {
 
 export default class UserRegistration extends Component<Status, StatusState> {
 
+    //Interface to Store Form Data
     register: RegisterInformation = {
         username: "",
         email: "",
@@ -37,6 +38,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
     }
 
 
+    //Submit Handler
     submit_register = (e: SyntheticEvent) => {
         e.preventDefault();
         if (this.register.password !== this.register.password_r) {
@@ -48,6 +50,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
     }
 
 
+    //Post Request to Register a new User
     async registerCallApi() {
         let httpCode: number = 0;
         await fetch(backendURL + "/register", {

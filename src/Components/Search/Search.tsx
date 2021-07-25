@@ -27,6 +27,7 @@ export default class Search extends Component<SearchPageProps, SearchPageState> 
         }
     }
     
+    //Get Search Results from backend
     getSearchResultsFormServer = async () => {
         let httpCode:number = 0;
         let searchResults: SearchResultModel = EMPTY_RESULTS;
@@ -57,11 +58,13 @@ export default class Search extends Component<SearchPageProps, SearchPageState> 
         console.log(searchResults)
     }
 
+    //Do search on "Enter"
     handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.getSearchResultsFormServer()
     }
 
+    //New Search after Input has changed and "Enter"
     handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
         this.setState({searchQuery: event.currentTarget.value as string})
     }

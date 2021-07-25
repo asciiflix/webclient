@@ -36,11 +36,13 @@ export default class UserLogin extends Component<UserLoginStatusProps, UserLogin
         };
     }
 
+    //Submit Handler
     submit_login = async (e: SyntheticEvent) => {
         e.preventDefault();
         await this.loginCallApi();
     }
 
+    //Login Request to the backend: Post Request to get the jwt-token -> user-login
     async loginCallApi() {
         let httpCode: number = 0;
         let userJWTToken: string = "";
@@ -60,6 +62,7 @@ export default class UserLogin extends Component<UserLoginStatusProps, UserLogin
         .then(json => userJWTToken = json.jwt);
         
         if (httpCode === 200) {
+            //Stores the JWT-Token
             this.props.changeJwt(userJWTToken);
             this.setState({isLoggedIn: true, jwtToken: userJWTToken});
         } else {

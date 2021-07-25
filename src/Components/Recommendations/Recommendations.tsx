@@ -28,6 +28,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         };
     }
 
+    //Get Non-Specific Recommendation if user isn't logged in.
     async fetchVideoDataPublic() {
         let httpCode: number = 0;
         let fetchedVideoData: VideoMetaDataModel[] = [];
@@ -49,6 +50,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         }
     }
 
+    //Get User-specific Recommendations (only when user is logged in)
     async fetchVideoDataPrivate() {
         let httpCode: number = 0;
         let fetchedVideoData: VideoMetaDataModel[] = [];
@@ -75,6 +77,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         }
     }
 
+    //Load Recommendations on Component load
     componentDidMount = () => {
         if (this.jwtToken === "") {
             this.fetchVideoDataPublic();
@@ -84,6 +87,7 @@ export default class Recommendations extends Component<RecommendationsProps, Rec
         }
     }
 
+    //Get new Recommendations after the component did update (ex. clicked on new Video)
     componentDidUpdate() {
         if (!this.state.hasPrivateVideos && this.jwtToken !== ""){
             this.fetchVideoDataPrivate();

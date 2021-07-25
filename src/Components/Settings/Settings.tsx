@@ -55,18 +55,21 @@ export default class Settings extends Component<StatusProps, StatusState> {
         };
     }
 
+    //Interface to store form data (account-info)
     accountInformation: AccountInformation = {
         username: "",
         description: "",
         email: ""
     };
 
+    //Interface to store form data (account-secrets)
     accountSecret: AccountSecrets = {
         currentPW: "",
         newPW: "",
         newPWRepeat: ""
     };
 
+    //Get "Private" User Information from the backend (username, email, desc)
     async getPrivateUserInformation() {
         let httpCode: number = 0;
         let userData: UserModelPrivate = {};
@@ -89,6 +92,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
         }
     }
 
+    //Put Request to Update Account-Information at the backend
     async changeAccountInformation() {
         let httpCode: number = 0;
         let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken).User_ID;
@@ -125,6 +129,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
         }
     }
 
+    //Put Request to change the pw at the backend
     async changePassword() {
         let httpCode: number = 0;
         let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken).User_ID;
@@ -145,6 +150,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
         }
     }
 
+    //Checks if the entered password is the correct password
     async checkCurrentPassword() {
         let httpCode: number = 0;
         let email: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_email"];
@@ -172,6 +178,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
         }
     }
 
+    //Delete Request to delete the account at the backend
     async deleteAccount() {
         let httpCode: number = 0;
         let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"];
@@ -189,27 +196,34 @@ export default class Settings extends Component<StatusProps, StatusState> {
         }
     }
 
+    //Submit Handler for Account Information
     submit_accInfos = (e: SyntheticEvent) => {
         e.preventDefault();
         this.changeAccountInformation();
     }
 
+    //Submit Handler for Account Secrets (PW)
     submit_accSecret = (e: SyntheticEvent) => {
         e.preventDefault();
         //Check if current password is correct, then change it.
         this.checkCurrentPassword();
     }
 
+    //Submit Handler to Delete the Account
     submit_deleteAcc = (e: SyntheticEvent) => {
         e.preventDefault();
         this.deleteAccount();
     }
 
+
+    //After Name change, set new name for the jwt handler
     finalizeNameChange = () => {
         this.props.changeJwt(this.props.jwtUserInfo.jwtToken);
         return <Redirect to="/"></Redirect>;
     }
 
+
+    //On Mount load User Information
     componentDidMount() {
         if (this.props.jwtUserInfo.jwtToken !== "") {
             this.getPrivateUserInformation();
