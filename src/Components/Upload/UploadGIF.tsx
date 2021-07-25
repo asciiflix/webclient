@@ -28,6 +28,7 @@ interface UploadProps {
 }
 
 export default class UploadGIF extends Component<UploadProps, UploadState> {
+    //Interface to store Upload-Form-Data
     uploadData: UploadForm = {
         title: "",
         description: "",
@@ -46,12 +47,14 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
         };
     }
 
+    //Handler for Image Upload
     handleImage(e: React.ChangeEvent<HTMLInputElement>) {
         this.uploadData.gif = e.target.files;
         this.setState({ videoName: this.uploadData.gif?.[0].name as string })
         this.setState({ uploadedFile: true });
     }
 
+    //Submit Handler
     submit_upload = (e: SyntheticEvent) => {
         e.preventDefault();
         if (!this.state.submitted) {
@@ -60,6 +63,7 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
         }
     }
 
+    //Post Request, to upload the new gif
     async uploadDataToAPI() {
         //Create Form Data
         const formData = new FormData();
@@ -88,8 +92,6 @@ export default class UploadGIF extends Component<UploadProps, UploadState> {
             this.setState({ failed: true, submitted: false });
         }
     }
-
-
 
     render() {
         return (

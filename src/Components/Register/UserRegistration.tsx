@@ -16,11 +16,13 @@ interface Status {
 
 interface StatusState {
     isRegistered: boolean,
-    wrongPW: boolean
+    wrongPW: boolean,
+    error: boolean
 }
 
 export default class UserRegistration extends Component<Status, StatusState> {
 
+    //Interface to Store Form Data
     register: RegisterInformation = {
         username: "",
         email: "",
@@ -32,11 +34,13 @@ export default class UserRegistration extends Component<Status, StatusState> {
         super(props);
         this.state = {
             isRegistered: props.isRegistered,
-            wrongPW: false
+            wrongPW: false,
+            error: false
         };
     }
 
 
+    //Submit Handler
     submit_register = (e: SyntheticEvent) => {
         e.preventDefault();
         if (this.register.password !== this.register.password_r) {
@@ -48,6 +52,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
     }
 
 
+    //Post Request to Register a new User
     async registerCallApi() {
         let httpCode: number = 0;
         await fetch(backendURL + "/register", {
@@ -62,12 +67,11 @@ export default class UserRegistration extends Component<Status, StatusState> {
             .then(response => {
                 httpCode = response.status;
                 return response.json();
-            })
-            .then(json => console.log(json.message));
+            });
         if (httpCode === 201) {
             this.setState({ isRegistered: true })
         } else {
-            console.log("Error Creating User");
+            this.setState({ error: true })
         }
     }
 
@@ -79,6 +83,7 @@ export default class UserRegistration extends Component<Status, StatusState> {
                         <div className="empty-div">
                             <h1 className="form-title-text">Register</h1>
                             {this.state.wrongPW ? <p className="login-form-failed-login">Password does not match</p> : <></>}
+                            {this.state.error ? <p className="login-form-failed-login">Registration Error</p> : <></>}
                             <label>Username</label>
                             <input className="form-input" type="name" placeholder="Username" required onChange={e => this.register.username = e.target.value}></input>
 

@@ -12,10 +12,10 @@ interface UserPreviewProps {
 
 export default class UserPreview extends Component<UserPreviewProps> {
 
+    //Returns a shorter Description if its longer then 15 chars. (ex. UltraLongDescription -> UltraLongDescri...)
     getShortDesc = () => {
         if (this.props.description === undefined)
             return "Ultra cool dude..."
-        console.log(this.props.description)
         if (this.props.description.length < 15) {
             return this.props.description;
         } else {
