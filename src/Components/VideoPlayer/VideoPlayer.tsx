@@ -42,6 +42,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
     }
 
     componentWillUnmount = () => {
+        // keep the browser from overloading
         this.stopPlaying();
     }
 
@@ -53,6 +54,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
     }
 
     startPlaying = () => {
+        // update video player in set intervalls to produce video
         this.timerId = setInterval(this.increaseFrame, 31);
         this.setState({
             isPlaying: true,
@@ -62,6 +64,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
 
     increaseFrame = () => {
         if (this.state.video === null || this.state.video === INVALID_VIDEO) {
+            // do nothing, optimisation might be to add handling
         } else {
             // reset frames if over the limit
             if (this.state.frameIndex > this.state.video.Frames.length - 2) {
@@ -128,6 +131,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
     }
 
     render() {
+        // Handle various states for Video: Invalid, Loading and actual Playback
         if (this.state.video === null) {
             return <p>Video loading...</p>
         }
