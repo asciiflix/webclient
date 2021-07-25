@@ -27,10 +27,12 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
             formText: ""
         };
     }
+
     componentDidMount = () => {
         this.fetchDataFromApi();
     }
 
+    //Get all Video-specific comments from the backend
     async fetchDataFromApi() {
         let httpCode: number = 0;
         let commentsDataFetched: CommentModel[] | null = null;
@@ -54,6 +56,7 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
         }
     }
 
+    //Get usernames for every comment
     async updateUsernames() {
         if (this.state.commentsData !== null){
             let data = this.state.commentsData
@@ -68,6 +71,7 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
     }
 
 
+    //Post Request to the backend to create a comment
     async uploadCommentToAPI() {
         let httpCode: number = 0;
         await fetch(backendURL + "/secure/video/createComment?id=" + this.props.videoId, {
@@ -84,6 +88,8 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
         }
 
     }
+
+    //Submit Handler
     submit_comment = (e: SyntheticEvent) => {
         e.preventDefault();
         this.uploadCommentToAPI();
@@ -91,9 +97,6 @@ export default class VideoInfo extends Component<CommentsProps, CommentsState> {
             formText:"",
         })
     }
-
-
-
 
     render() {
         if (this.state.commentsData === null) {

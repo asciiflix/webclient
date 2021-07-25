@@ -25,15 +25,18 @@ export default class VerifyComp extends Component<VerifyProps, VerifyStats> {
         };
     }
 
-    submit = async (e: SyntheticEvent) => {
+    //Submit Handler
+    submit = (e: SyntheticEvent) => {
         e.preventDefault();
-        await this.verifyAccount();
+        this.verifyAccount();
     }
 
-    sendCode = async () => {
-        await this.sendCodeToAPI();
+    //Button Handler
+    sendCode = () => {
+        this.sendCodeToAPI();
     }
 
+    //Put Request to verify the account at the backend
     async verifyAccount() {
         let httpCode: number = 0;
         await fetch(backendURL + '/secure/user/verify?code=' + this.state.code, {
@@ -55,9 +58,9 @@ export default class VerifyComp extends Component<VerifyProps, VerifyStats> {
         }
     }
 
+    //Request a new Verification Code
     async sendCodeToAPI() {
         let httpCode: number = 0;
-        console.log(this.props.jwtUserInfo.jwtToken)
         await fetch(backendURL + '/secure/user/sendCode', {
             method: "POST",
             headers: { "Token": this.props.jwtUserInfo.jwtToken }

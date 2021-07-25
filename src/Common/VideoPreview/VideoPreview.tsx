@@ -27,6 +27,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
         }
     }
 
+    //Used to set the Creator Name in the Video Title,
     async updateCreatorName() {
         let username: string = await getUserNameFromAPI(this.props.creator_id.toString());
         username = shortCreatorName(username, 10);
@@ -40,6 +41,7 @@ export default class VideoPreview extends Component<VideoPreviewProps, VideoPrev
         this.fetchVideoFromApi();
     }
 
+    //Get VideoThumbnail from backend
     async fetchVideoFromApi() {
         let httpCode: number = 0;
         let videoDataFetched: VideoFrame | null = null;

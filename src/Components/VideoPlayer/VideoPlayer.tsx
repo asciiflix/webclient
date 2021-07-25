@@ -76,6 +76,7 @@ export default class VideoPlayer extends Component<VideoPlayerProps, VideoPlayer
         }
     }
 
+    //Get VideoContent from the backend
     async fetchVideoFromApi() {
         let httpCode:number = 0;
         let videoDataFetched: VideoData | null = UNLOADED_VIDEO;

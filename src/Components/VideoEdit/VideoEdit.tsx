@@ -37,11 +37,13 @@ export default class VideoEdit extends Component<EditProps, EditStats> {
         };
     }
 
+    //Interface to store Video-Form Data
     videoEdit: VideoInformation = {
         title: "",
         description: "",
     };
 
+    //Submit Handler
     submit_update = (e: SyntheticEvent) => {
         e.preventDefault();
         if (this.videoEdit.description === "" && this.videoEdit.title === "") {
@@ -52,11 +54,13 @@ export default class VideoEdit extends Component<EditProps, EditStats> {
         }
     }
 
+    //Submit Handler
     submit_delete = (e: SyntheticEvent) => {
         e.preventDefault();
         this.deleteVideo();
     }
 
+    //Get Video Data
     async getVideoDataFromAPI() {
         let httpCode: number = 0;
         let videoDataFetched: VideoMetaDataModel | null = null;
@@ -86,6 +90,7 @@ export default class VideoEdit extends Component<EditProps, EditStats> {
         }
     }
 
+    //Update Video Data at the backend
     async updateVideo() {
         let httpCode: number = 0;
         await fetch(backendURL + '/secure/video/updateVideo?id=' + this.props.videoID, {
@@ -106,6 +111,7 @@ export default class VideoEdit extends Component<EditProps, EditStats> {
         }
     }
 
+    //Delete Video at the backend
     async deleteVideo() {
         let httpCode: number = 0;
         await fetch(backendURL + '/secure/video/deleteVideo?id=' + this.props.videoID, {
@@ -122,6 +128,7 @@ export default class VideoEdit extends Component<EditProps, EditStats> {
         }
     }
 
+    //On load, get VideoData
     componentDidMount = () => {
         this.getVideoDataFromAPI();
     }

@@ -39,10 +39,12 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
             editMode: false
         };
     }
+
     componentDidMount = () => {
         this.fetchDataFromApi();
     }
 
+    //Get Video-Information
     async fetchDataFromApi() {
         let httpCode: number = 0;
         let videoDataFetched: VideoMetaDataModel | null = null;
@@ -87,6 +89,8 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+
+    //Get Like Status
     async getLike() {
         let httpCode: number = 0;
         let liked: boolean = false;
@@ -104,6 +108,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+    //Request to Like the Video
     async like() {
         let httpCode: number = 0;
         await fetch(backendURL + "/secure/video/createLike?id=" + this.state.videoMetaData?.UUID, {
@@ -124,6 +129,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+    //Request to remove the Like
     async removeLike() {
         let httpCode: number = 0;
         await fetch(backendURL + "/secure/video/deleteLike?id=" + this.state.videoMetaData?.UUID, {
@@ -141,6 +147,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+    //Checks if current logged-in user is the creator of this video, to enable the Video-Edit Button
     isCreator = () => {
         if (this.props.jwtUserInfo.jwtToken !== "") {
             let userID: string = jwt_decode(this.props.jwtUserInfo.jwtToken)["User_ID"].toString();
@@ -151,6 +158,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+    //Like Handler, checks if a user is logged-in and if the user already liked the video
     handleLike = () => {
         if (this.props.jwtUserInfo.jwtToken !== "") {
             if (this.state.liked) {
@@ -161,6 +169,7 @@ export default class VideoInfo extends Component<VideoInfoProps, VideoInfoState>
         }
     }
 
+    //Turns-On EditMode
     handleEdit = () => {
         this.setState({ editMode: true });
     }

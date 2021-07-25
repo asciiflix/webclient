@@ -26,6 +26,7 @@ export default class UserProfile extends Component<UserProfilePageProps, UserPro
         }
     }
 
+    //Get User Data
     async fetchUserData() {
         let httpCode: number = 0;
         let fetchedUserData: UserMetaDataModel | null = null;
@@ -48,6 +49,7 @@ export default class UserProfile extends Component<UserProfilePageProps, UserPro
         }
     }
 
+    //On load, get User-Data
     componentDidMount = () => {
         this.fetchUserData();
     }
