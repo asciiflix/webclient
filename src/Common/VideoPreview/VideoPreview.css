@@ -1,5 +1,6 @@
 .video-preview-container {
     justify-content: center;
+    width: var(--video-preview-width);
 }
 
 .video-preview-link {
@@ -37,6 +38,9 @@
 }
 
 @media screen and (max-width: 500px) {
+    .video-preview-container {
+        width: auto;
+    }
     .video-preview-thumbnail {
         width: auto;
     }

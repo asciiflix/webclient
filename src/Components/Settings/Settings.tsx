@@ -1,5 +1,5 @@
 import { Component, SyntheticEvent } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import jwt_decode from "../../Common/Helper/JwtDecoder";
 import { JwtUserInfo } from "../../Common/JwtContext/JwtContext";
 import { backendURL } from "../../Config";
@@ -221,10 +221,10 @@ export default class Settings extends Component<StatusProps, StatusState> {
             <div className="settings-form-container">
                 <div className="empty-div-settings">
                     <h1 className="form-title-text">Settings</h1>
-                        <h2 className="form-title-text">Change Account Information</h2>
-                        {this.state.MailChanged ? <Redirect to="/logout"></Redirect> : <></>}
-                        {this.state.DescChanged ? <p className="form-settings-successfully">Description Successfully Changed!</p> : <></>}
-                        {this.state.MailWrong ? <p className="login-form-failed-login">E-Mail is already taken!</p> : <></>}
+                    <h2 className="form-title-text">Change Account Information</h2>
+                    {this.state.MailChanged ? <Redirect to="/logout"></Redirect> : <></>}
+                    {this.state.DescChanged ? <p className="form-settings-successfully">Description Successfully Changed!</p> : <></>}
+                    {this.state.MailWrong ? <p className="login-form-failed-login">E-Mail is already taken!</p> : <></>}
                     <form className="settings-grid" onSubmit={this.submit_accInfos}>
                         <label className="form-label-text">Username:</label>
                         <input className="form-input" type="name" placeholder={this.state.CurrenUserData.Name} onChange={e => this.accountInformation.username = e.target.value}></input>
@@ -232,6 +232,7 @@ export default class Settings extends Component<StatusProps, StatusState> {
                         <textarea className="upload-input-desc" placeholder={this.state.CurrenUserData.Description} onChange={e => this.accountInformation.description = e.target.value}></textarea>
                         <label className="form-label-text">E-Mail:</label>
                         <input className="form-input" type="email" placeholder={this.state.CurrenUserData.Email} onChange={e => this.accountInformation.email = e.target.value}></input>
+                        <Link className="verify-link" to={"/verify"}>Verify your Account here!</Link>
                         {this.state.NameChanged ?
                             <UserContext.Consumer>
                                 {({ jwtToken, username, setUsername, setJwtToken, rerender }) => (
