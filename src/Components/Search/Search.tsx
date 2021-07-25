@@ -55,7 +55,6 @@ export default class Search extends Component<SearchPageProps, SearchPageState> 
             searchResults: searchResults,
             hasSearched: true
         })
-        console.log(searchResults)
     }
 
     //Do search on "Enter"
@@ -70,7 +69,6 @@ export default class Search extends Component<SearchPageProps, SearchPageState> 
     }
     
     render() {
-        console.log(this.state.searchResults)
         return (
             <div className="search-page-container">
                 <form onSubmit={this.handleSearch}>
